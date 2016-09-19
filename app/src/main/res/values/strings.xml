@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android_app</string>
+    <string name="title_activity_page3">Page3</string>
+    <string name="title_activity_text_tip">TextTip</string>
 </resources>
