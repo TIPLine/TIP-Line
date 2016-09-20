@@ -16,6 +16,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".audioTip"
+            android:label="@string/title_activity_audio_tip"
+            android:theme="@style/AppTheme"></activity>
+        <activity
             android:name=".TextTip"
             android:label="@string/text_tip"
             android:parentActivityName=".MainPage"
