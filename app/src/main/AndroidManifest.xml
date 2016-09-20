@@ -17,8 +17,13 @@
         </activity>
         <activity
             android:name=".TextTip"
-            android:label="@string/title_activity_text_tip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/text_tip"
+            android:parentActivityName=".MainPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TipCall"
+            android:label="@string/title_activity_tip_call"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
