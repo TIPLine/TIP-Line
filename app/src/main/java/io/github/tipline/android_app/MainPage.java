@@ -1,6 +1,5 @@
 package io.github.tipline.android_app;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,19 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
-
 public class MainPage extends AppCompatActivity {
 
-    private ListView DrawerList;
+    private ListView drawerList;
     private ArrayAdapter<String> adapter;
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle DrawerToggle;
-    private String ActivityTitle;
+    private ActionBarDrawerToggle drawerToggle;
+    private String activityTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +59,9 @@ public class MainPage extends AppCompatActivity {
         });
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActivityTitle = getTitle().toString();
+        activityTitle = getTitle().toString();
 
-        DrawerList = (ListView)findViewById(R.id.navList);
+        drawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
 
         setupDrawer();
@@ -78,9 +74,9 @@ public class MainPage extends AppCompatActivity {
     private void addDrawerItems() {
         String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        DrawerList.setAdapter(adapter);
+        drawerList.setAdapter(adapter);
 
-        DrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainPage.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
@@ -90,7 +86,7 @@ public class MainPage extends AppCompatActivity {
 
 
     private void setupDrawer() {
-        DrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
@@ -102,26 +98,26 @@ public class MainPage extends AppCompatActivity {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(ActivityTitle);
+                getSupportActionBar().setTitle(activityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
 
-        DrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.addDrawerListener(DrawerToggle);
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(drawerToggle);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        DrawerToggle.syncState();
+        drawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        DrawerToggle.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -144,7 +140,7 @@ public class MainPage extends AppCompatActivity {
         }
 
         // Activate the navigation drawer toggle
-        if (DrawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
