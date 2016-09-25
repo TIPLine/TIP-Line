@@ -1,8 +1,6 @@
 package io.github.tipline.android_app;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -51,7 +49,7 @@ public class TipMenuFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.button_tip_voice:
-                Intent audioIntent = new Intent(getActivity().getApplication(), audioTip.class);
+                Intent audioIntent = new Intent(getActivity().getApplication(), AudioTip.class);
                 this.startActivity(audioIntent);
                 break;
 

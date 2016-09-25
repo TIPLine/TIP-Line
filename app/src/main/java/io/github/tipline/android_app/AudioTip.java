@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class audioTip extends AppCompatActivity implements View.OnClickListener {
+public class AudioTip extends AppCompatActivity implements View.OnClickListener {
 
     private Button submitButton;
     private Button cancelButton;
