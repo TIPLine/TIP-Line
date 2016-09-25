@@ -15,8 +15,10 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:paddingBottom="8dp"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal|bottom"
+        android:background="@color/darkBlueTranslucent"
         android:layout_marginTop="0dp">
 
         <LinearLayout
@@ -32,6 +34,7 @@
                 android:layout_marginTop="30dp"
                 android:textSize="28dp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
         <LinearLayout
