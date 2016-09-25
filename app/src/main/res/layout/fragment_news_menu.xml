@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--The below linearlayouts are just placeholders. Eventually the news layout will be done programmtically based on articles available-->
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
             <fragment android:name="io.github.tipline.android_app.NewsFragmentSmall"
                 android:id="@+id/frag_news1"
@@ -37,6 +39,35 @@
                 tools:layout="@layout/fragment_news_menu" />
             <fragment android:name="io.github.tipline.android_app.NewsFragmentSmall"
                 android:id="@+id/frag_news2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_news_menu" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+            <fragment android:name="io.github.tipline.android_app.NewsFragmentLarge"
+                android:id="@+id/frag_news3"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                tools:layout="@layout/fragment_news_menu" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <fragment android:name="io.github.tipline.android_app.NewsFragmentSmall"
+                android:id="@+id/frag_news4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="220dp"
+                android:layout_marginRight="8dp"
+                tools:layout="@layout/fragment_news_menu" />
+            <fragment android:name="io.github.tipline.android_app.NewsFragmentSmall"
+                android:id="@+id/frag_news5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
