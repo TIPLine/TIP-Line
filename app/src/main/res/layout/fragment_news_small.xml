@@ -10,36 +10,39 @@
         android:scaleType="center"
         xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:orientation="vertical"
         android:layout_gravity="center_horizontal|bottom"
-        android:background="@color/darkBlueTranslucent"
-        android:layout_marginTop="0dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Small News Title"
-                android:id="@+id/news_title"
-                android:layout_below="@+id/tab_layout"
-                android:layout_marginTop="30dp"
-                android:textSize="28dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:layout_centerHorizontal="true" />
-        </LinearLayout>
+
+        <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="16dp"
+            android:orientation="vertical"
+            android:background="@color/darkBlueTranslucent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Small News Title"
+            android:id="@+id/news_title"
+            android:layout_below="@+id/tab_layout"
+            android:layout_marginTop="30dp"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@color/lightBlueTranslucent"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
             >
             <ImageButton
                 android:layout_width="0dp"
