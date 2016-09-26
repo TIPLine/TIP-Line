@@ -12,4 +12,70 @@
     tools:context="io.github.tipline.android_app.TipCall"
     tools:showIn="@layout/activity_tip_call">
 
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:text="Cancel"
+        android:id="@+id/cancel_call"
+        android:layout_marginBottom="85dp"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:text="Submit"
+        android:id="@+id/submit_call"
+        android:textSize="20dp"
+        android:layout_alignTop="@+id/cancel_call"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tip Subject"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textIsSelectable="false"
+        android:id="@+id/tip_sub_call"
+        android:layout_marginTop="36dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tip_in_call"
+        android:layout_below="@+id/tip_sub_call"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tip Information"
+        android:id="@+id/textView6_call"
+        android:layout_below="@+id/tip_in_call"
+        android:layout_marginTop="50dp"
+        android:layout_alignRight="@+id/cancel_call"
+        android:layout_alignEnd="@+id/cancel_call" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText5"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView6_call"
+        android:layout_alignStart="@+id/textView6_call"
+        android:inputType="textMultiLine"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
