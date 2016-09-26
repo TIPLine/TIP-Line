@@ -16,8 +16,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".audioTip"
+            android:name=".AudioTip"
             android:label="@string/title_activity_audio_tip"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/action_settings"
             android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".TextTip"

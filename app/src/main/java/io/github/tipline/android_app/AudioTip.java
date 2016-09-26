@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class TipCall extends AppCompatActivity implements View.OnClickListener {
+public class AudioTip extends AppCompatActivity implements View.OnClickListener {
 
     private Button submitButton;
     private Button cancelButton;
@@ -18,9 +18,15 @@ public class TipCall extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tip_call);
+        setContentView(R.layout.activity_audio_tip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        submitButton = (Button) findViewById(R.id.audioSubmit);
+        cancelButton = (Button) findViewById(R.id.audioCancel);
+
+        submitButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -30,22 +36,16 @@ public class TipCall extends AppCompatActivity implements View.OnClickListener {
                         .setAction("Action", null).show();
             }
         });
-
-        submitButton = (Button) findViewById(R.id.submit_call);
-        cancelButton = (Button) findViewById(R.id.cancel_call);
-
-        submitButton.setOnClickListener(this);
-        cancelButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.submit_call:
+            case R.id.audioSubmit:
                 showConfirmationDialog();
                 break;
-            case R.id.cancel_call:
+            case R.id.audioCancel:
                 showCancellationDialog();
 
             default:
@@ -58,7 +58,7 @@ public class TipCall extends AppCompatActivity implements View.OnClickListener {
     private void showConfirmationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
-        helpBuilder.setTitle("Confirm Call Tip?");
+        helpBuilder.setTitle("Confirm Audio Tip?");
         helpBuilder.setMessage("Use this message? The message will be " +
                 "sent to law enforcement officials to investigate this suspicion of human trafficking.");
         helpBuilder.setPositiveButton("Confirm",
@@ -84,7 +84,7 @@ public class TipCall extends AppCompatActivity implements View.OnClickListener {
     private void showCancellationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
-        helpBuilder.setTitle("Cancel Call Tip?");
+        helpBuilder.setTitle("Cancel Audio Tip?");
         helpBuilder.setMessage("Are you sure you want to cancel this message? " +
                 "Your message and any attachments will be lost and will not be sent to the authorities");
         helpBuilder.setPositiveButton("Return to Message",
