@@ -1,5 +1,7 @@
 package io.github.tipline.android_app;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -72,14 +74,38 @@ public class MainPage extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "News" };
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
 
+
+        //Handle button presses for items in the hamburger menu
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainPage.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                String tester = Integer.toString(position);
+                //Toast.makeText(MainPage.this, tester, Toast.LENGTH_SHORT).show();
+
+                switch (position) {
+                    case 0:
+                        startActivity(new Intent(MainPage.this, MainPage.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(MainPage.this, TipCall.class));
+                        break;
+                    case 2:
+                        startActivity(new Intent(MainPage.this, TextTip.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(MainPage.this, AudioTip.class));
+                        break;
+                    case 4:
+                        //startActivity(new Intent(MainPage.this, TextTip.class));
+                        break;
+                    case 5:
+                        startActivity(new Intent(MainPage.this, NewsMenuFragment.class));
+                        break;
+                }
             }
         });
     }
@@ -146,5 +172,7 @@ public class MainPage extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
 
