@@ -54,7 +54,6 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-
     private void showConfirmationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);

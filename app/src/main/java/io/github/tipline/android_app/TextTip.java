@@ -1,11 +1,13 @@
 package io.github.tipline.android_app;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +18,8 @@ import android.widget.EditText;
 
 public class TextTip extends AppCompatActivity implements View.OnClickListener{
 
-    private Button submitButton;
-    private Button cancelButton;
+    Button submitButton;
+    Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,19 +28,11 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        submitButton = (Button) findViewById(R.id.submit);
+        submitButton = (Button) findViewById(R.id.textSubmit);
         submitButton.setOnClickListener(this);
 
-        cancelButton = (Button) findViewById(R.id.cancel);
+        cancelButton = (Button) findViewById(R.id.textCancel);
         cancelButton.setOnClickListener(this);
 
     }
@@ -47,41 +41,34 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.submit:
+            case R.id.textSubmit:
                 showConfirmationDialog();
                 break;
-            case R.id.cancel:
+            case R.id.textCancel:
                 showCancellationDialog();
 
             default:
                 break;
         }
-
     }
-
 
     private void showConfirmationDialog() {
 
-        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(TextTip.this);
         helpBuilder.setTitle("Confirm Text Tip?");
         helpBuilder.setMessage("Use this message? The message will be " +
                 "sent to law enforcement officials to investigate this suspicion of human trafficking.");
         helpBuilder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
+                        showTipSentDialog();
                     }
                 });
         helpBuilder.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int which) {
-                        //Nothing but close dialog box
                     }
                 });
-
-        // Remember, create doesn't show the dialog
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
@@ -101,15 +88,29 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
                 });
         helpBuilder.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int which) {
-                        //Nothing but close dialog box
+                        startActivity(new Intent(TextTip.this, MainPage.class));
                     }
                 });
 
-        // Remember, create doesn't show the dialog
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
+
+    private void showTipSentDialog() {
+        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        helpBuilder.setTitle("Tip Sent");
+        helpBuilder.setMessage("Your tip was successfully sent to the authorities. " +
+                "Thank you for reporting this incident.");
+        helpBuilder.setPositiveButton("Home",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(TextTip.this, MainPage.class));
+                    }
+                });
+        AlertDialog helpDialog = helpBuilder.create();
+        helpDialog.show();
+    }
+
 
 }
