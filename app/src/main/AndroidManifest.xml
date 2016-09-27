@@ -18,20 +18,35 @@
         <activity
             android:name=".AudioTip"
             android:label="@string/title_activity_audio_tip"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage"/>
+        </activity>
         <activity
             android:name=".Settings"
             android:label="@string/action_settings"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage"/>
+        </activity>
         <activity
             android:name=".TextTip"
             android:label="@string/text_tip"
-            android:parentActivityName=".MainPage"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage"/>
+        </activity>
         <activity
             android:name=".TipCall"
             android:label="@string/title_activity_tip_call"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage"/>
+        </activity>
     </application>
 
 </manifest>

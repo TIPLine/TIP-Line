@@ -28,6 +28,8 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         submitButton = (Button) findViewById(R.id.textSubmit);
         submitButton.setOnClickListener(this);
@@ -35,6 +37,18 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
         cancelButton = (Button) findViewById(R.id.textCancel);
         cancelButton.setOnClickListener(this);
 
+    }
+
+    //Controls back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return false;
     }
 
     @Override
