@@ -62,6 +62,12 @@
         android:background="?android:attr/selectableItemBackground"
         android:layout_alignParentBottom="true" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/thumbnail_layout">
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
