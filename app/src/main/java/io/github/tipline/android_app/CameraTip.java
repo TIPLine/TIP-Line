@@ -69,7 +69,7 @@ public class CameraTip extends AppCompatActivity implements View.OnClickListener
     private void showConfirmationDialog() {
 
         final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(CameraTip.this);
-        helpBuilder.setTitle("Confirm Text Tip?");
+        helpBuilder.setTitle("Confirm Camera Tip?");
         helpBuilder.setMessage("Use this message? The message will be " +
                 "sent to law enforcement officials to investigate this suspicion of human trafficking.");
         helpBuilder.setPositiveButton("Confirm",
