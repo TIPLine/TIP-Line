@@ -24,17 +24,6 @@
         android:layout_marginLeft="25dp"
         android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="PLACEHOLDER FOR AUDIO RECORDER"
-        android:id="@+id/textView"
-        android:layout_above="@+id/audioSubmit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textAlignment="center" />
-
     <Button
         android:layout_width="130dp"
         android:layout_height="80dp"
