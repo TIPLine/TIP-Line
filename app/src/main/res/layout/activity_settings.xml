@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context="io.github.tipline.android_app.Settings">
+
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location Services"
+        android:id="@+id/switch1"
+        android:layout_marginTop="56dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:textSize="22sp"
+        android:textColor="#000000"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cellular Data"
+        android:id="@+id/switch2"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:textSize="22sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/switch1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="41dp"
+        android:layout_alignRight="@+id/switch1"
+        android:layout_alignEnd="@+id/switch1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Language"
+        android:id="@+id/languageText"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:textSize="22sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/storageText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Storage"
+        android:id="@+id/storageSwitch"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:textSize="22sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/switch2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/storageText"
+        android:textColor="#000000"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="Allowing storage will allow this application to store images, voice recordings, and videos sent using TIP Line to your camera roll."
+        android:layout_below="@+id/storageSwitch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="76dp"
+        android:id="@+id/radioGroup"
+        android:layout_below="@+id/storageText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RadioButton
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:paddingLeft="10dp"
+            android:id="@+id/englishButton"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioButton
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:text="French"
+            android:paddingLeft="10dp"
+            android:id="@+id/frenchButton"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioButton
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:text="German"
+            android:paddingLeft="10dp"
+            android:id="@+id/germanButton"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioButton
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:text="Spanish"
+            android:paddingLeft="10dp"
+            android:id="@+id/spanishButton"
+            android:layout_gravity="center_horizontal" />
+
+    </RadioGroup>
+
+</RelativeLayout>

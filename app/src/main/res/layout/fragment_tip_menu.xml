@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@color/grey"
     android:fillViewport="false">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -24,7 +24,7 @@
             android:gravity="center_horizontal|top">
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal|top"
                 android:orientation="vertical">
                 <TextView
@@ -34,20 +34,21 @@
                     android:text="Tip Line"
                     android:id="@+id/textView2"
                     android:layout_below="@+id/tab_layout"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="0dp"
                     android:textSize="35dp"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
                     android:layout_centerHorizontal="true" />
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_horizontal|top"
                     android:layout_marginTop="40dp"
                     android:orientation="vertical">
                     <Button
                         android:layout_width="fill_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:text="Emergency Tip Call"
                         android:id="@+id/button_tip_call"
                         android:layout_marginTop="0dp"
@@ -58,7 +59,8 @@
                         android:layout_centerHorizontal="true" />
                     <Button
                         android:layout_width="fill_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:text="Text Tip"
                         android:id="@+id/button_tip_text"
                         android:layout_marginTop="28dp"
@@ -69,7 +71,8 @@
                         android:layout_centerHorizontal="true" />
                     <Button
                         android:layout_width="fill_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:text="Voice Tip"
                         android:id="@+id/button_tip_voice"
                         android:layout_marginTop="28dp"
@@ -80,7 +83,8 @@
                         android:layout_centerHorizontal="true" />
                     <Button
                         android:layout_width="fill_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:text="Photo/Video Tip"
                         android:id="@+id/button_tip_camera"
                         android:layout_marginTop="28dp"
@@ -100,4 +104,4 @@
         </RelativeLayout>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

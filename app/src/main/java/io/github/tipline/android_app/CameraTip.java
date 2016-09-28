@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class TextTip extends AppCompatActivity implements View.OnClickListener{
+public class CameraTip extends AppCompatActivity implements View.OnClickListener {
 
     Button submitButton;
     Button cancelButton;
@@ -24,7 +24,7 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text_tip);
+        setContentView(R.layout.activity_camera_tip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -68,8 +68,8 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
 
     private void showConfirmationDialog() {
 
-        final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(TextTip.this);
-        helpBuilder.setTitle("Confirm Text Tip?");
+        final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(CameraTip.this);
+        helpBuilder.setTitle("Confirm Camera Tip?");
         helpBuilder.setMessage("Use this message? The message will be " +
                 "sent to law enforcement officials to investigate this suspicion of human trafficking.");
         helpBuilder.setPositiveButton("Confirm",
@@ -90,7 +90,7 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
     private void showCancellationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
-        helpBuilder.setTitle("Cancel Text Tip?");
+        helpBuilder.setTitle("Cancel Camera Tip?");
         helpBuilder.setMessage("Are you sure you want to cancel this message? " +
                 "Your message and any attachments will be lost and will not be sent to the authorities");
         helpBuilder.setPositiveButton("Return to Message",
@@ -103,7 +103,7 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
         helpBuilder.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(TextTip.this, MainPage.class));
+                        startActivity(new Intent(CameraTip.this, MainPage.class));
                     }
                 });
 
@@ -119,7 +119,7 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
         helpBuilder.setPositiveButton("Home",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(TextTip.this, MainPage.class));
+                        startActivity(new Intent(CameraTip.this, MainPage.class));
                     }
                 });
         AlertDialog helpDialog = helpBuilder.create();

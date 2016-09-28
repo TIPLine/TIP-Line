@@ -25,6 +25,7 @@ public class MainPage extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class MainPage extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); //adapter generates the pages that the viewpager shows
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -74,7 +75,7 @@ public class MainPage extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "News" };
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "News", "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
 
@@ -88,7 +89,8 @@ public class MainPage extends AppCompatActivity {
 
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainPage.this, MainPage.class));
+                        viewPager.setCurrentItem(0);
+                        mDrawerLayout.closeDrawer(drawerList);
                         break;
                     case 1:
                         startActivity(new Intent(MainPage.this, TipCall.class));
@@ -100,10 +102,14 @@ public class MainPage extends AppCompatActivity {
                         startActivity(new Intent(MainPage.this, AudioTip.class));
                         break;
                     case 4:
-                        //startActivity(new Intent(MainPage.this, TextTip.class));
+                        startActivity(new Intent(MainPage.this, CameraTip.class));
                         break;
                     case 5:
-                        startActivity(new Intent(MainPage.this, NewsMenuFragment.class));
+                        viewPager.setCurrentItem(1);
+                        mDrawerLayout.closeDrawer(drawerList);
+                        break;
+                    case 6:
+                        startActivity(new Intent(MainPage.this, Settings.class));
                         break;
                 }
             }
@@ -162,6 +168,8 @@ public class MainPage extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent settingsIntent= new Intent(this, Settings.class);
+            startActivity(settingsIntent);
             return true;
         }
 
