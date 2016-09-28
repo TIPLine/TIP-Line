@@ -25,6 +25,7 @@ public class MainPage extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class MainPage extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); //adapter generates the pages that the viewpager shows
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -88,7 +89,8 @@ public class MainPage extends AppCompatActivity {
 
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainPage.this, MainPage.class));
+                        viewPager.setCurrentItem(0);
+                        mDrawerLayout.closeDrawer(drawerList);
                         break;
                     case 1:
                         startActivity(new Intent(MainPage.this, TipCall.class));
@@ -103,7 +105,8 @@ public class MainPage extends AppCompatActivity {
                         //startActivity(new Intent(MainPage.this, TextTip.class));
                         break;
                     case 5:
-                        startActivity(new Intent(MainPage.this, NewsMenuFragment.class));
+                        viewPager.setCurrentItem(1);
+                        mDrawerLayout.closeDrawer(drawerList);
                         break;
                 }
             }
