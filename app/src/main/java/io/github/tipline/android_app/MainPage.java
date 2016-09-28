@@ -75,7 +75,7 @@ public class MainPage extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "News" };
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "News", "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
 
@@ -107,6 +107,9 @@ public class MainPage extends AppCompatActivity {
                     case 5:
                         viewPager.setCurrentItem(1);
                         mDrawerLayout.closeDrawer(drawerList);
+                        break;
+                    case 6:
+                        startActivity(new Intent(MainPage.this, Settings.class));
                         break;
                 }
             }
