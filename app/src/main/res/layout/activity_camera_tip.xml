@@ -23,5 +23,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_camera_tip" />
-    
+
+
 </android.support.design.widget.CoordinatorLayout>

@@ -24,6 +24,17 @@
         android:layout_marginLeft="25dp"
         android:textSize="20dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="PLACEHOLDER FOR AUDIO RECORDER"
+        android:id="@+id/textView"
+        android:layout_above="@+id/audioSubmit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center" />
+
     <Button
         android:layout_width="130dp"
         android:layout_height="80dp"
@@ -80,40 +91,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:inputType="textMultiLine" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record"
-        android:id="@+id/record"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/editText4"
-        android:layout_marginTop="30dp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="Stop"
-        android:id="@+id/stop_audio"
-        android:layout_alignTop="@+id/record"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4"
-        android:layout_alignBottom="@+id/record"
-        android:width="70dp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="Play"
-        android:id="@+id/play_audio"
-        android:layout_alignTop="@+id/record"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:width="70dp" />
 
 </RelativeLayout>

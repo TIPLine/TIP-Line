@@ -1,13 +1,8 @@
 package io.github.tipline.android_app;
 
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -17,26 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.media.MediaRecorder;
-import android.media.MediaPlayer;
-import android.content.Intent;
-import android.net.Uri;
-import android.app.Activity;
-import android.content.Context;
-import java.util.List;
-
-import java.io.IOException;
 
 public class AudioTip extends AppCompatActivity implements View.OnClickListener {
 
     private Button submitButton;
     private Button cancelButton;
-    private Button record, play, stop;
-    public static int RQS_RECORDING = 1;
-    private MediaRecorder audioRecorder = null;
-    private String outputFile = null;
-    private Uri saved;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +28,20 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
         //Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //initialize buttons
         submitButton = (Button) findViewById(R.id.audioSubmit);
         cancelButton = (Button) findViewById(R.id.audioCancel);
-        record = (Button) findViewById(R.id.record);
-        play = (Button) findViewById(R.id.play_audio);
-        stop = (Button) findViewById(R.id.stop_audio);
-
-        //set play and stop to disabled
-        stop.setEnabled(false);
-        play.setEnabled(false);
-        //outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gpp";
-
-        //set up Media Recorder
 
         submitButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
-        record.setOnClickListener(this);
-        stop.setOnClickListener(this);
-        play.setOnClickListener(this);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     //Controls back button
@@ -91,9 +65,6 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.audioCancel:
                 showCancellationDialog();
-
-            case R.id.record:
-                beginRecording();
 
             default:
                 break;
@@ -165,38 +136,4 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-    private void beginRecording() {
-//        audioRecorder = new MediaRecorder();
-//        audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//        audioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        audioRecorder.setOutputFile(outputFile);
-//        audioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-//        try {
-//            audioRecorder.prepare();
-//            audioRecorder.start();
-//        } catch (IllegalStateException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        record.setEnabled(false);
-//        stop.setEnabled(true);
-        Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-        if(recorderIsAvailible(getApplicationContext(), intent)) {
-            startActivityForResult(intent, RQS_RECORDING);
-        }
-    }
-    private boolean recorderIsAvailible(Context ctx, Intent intent) {
-        final PackageManager mgr = ctx.getPackageManager();
-
-        List<ResolveInfo> list = mgr.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
-    }
-
-//    @Override
-//    protected void onActivityResult(int resCode, int resultCode, Intent data) {
-//        if (resCode == RECORD_REQUEST) {
-//            saved = data.getData();
-//        }
-//    }
 }
