@@ -102,7 +102,7 @@ public class MainPage extends AppCompatActivity {
                         startActivity(new Intent(MainPage.this, AudioTip.class));
                         break;
                     case 4:
-                        //startActivity(new Intent(MainPage.this, TextTip.class));
+                        startActivity(new Intent(MainPage.this, CameraTip.class));
                         break;
                     case 5:
                         viewPager.setCurrentItem(1);

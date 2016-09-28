@@ -53,10 +53,10 @@ public class TipMenuFragment extends Fragment implements View.OnClickListener {
                 this.startActivity(audioIntent);
                 break;
 
-//            case R.id.button_tip_camera:
-//                Intent myIntent = new Intent(getActivity().getApplication(), TipCall.class);
-//                this.startActivity(myIntent);
-//                break;
+            case R.id.button_tip_camera:
+                Intent cameraIntent = new Intent(getActivity().getApplication(), CameraTip.class);
+                this.startActivity(cameraIntent);
+                break;
 
             default:
                 break;
