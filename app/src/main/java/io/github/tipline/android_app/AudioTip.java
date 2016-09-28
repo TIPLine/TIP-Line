@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -68,15 +69,8 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
         stop.setOnClickListener(this);
         play.setOnClickListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
+
 
     //Controls back button
     @Override
@@ -173,7 +167,7 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-    
+
     private void beginRecording() {
 //        audioRecorder = new MediaRecorder();
 //        audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
