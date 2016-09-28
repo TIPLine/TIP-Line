@@ -173,6 +173,7 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener 
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
+    
     private void beginRecording() {
 //        audioRecorder = new MediaRecorder();
 //        audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
