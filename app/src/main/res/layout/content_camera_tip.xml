@@ -54,19 +54,36 @@
         android:layout_marginTop="50dp"
         android:layout_alignParentBottom="true" />
 
-    <ImageButton
+    <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_attachment"
-        android:src="@drawable/ic_add_black_24dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/thumbnail_layout">
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/thumbnail_layout">
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_attachment"
+            android:src="@drawable/ic_add_black_24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_alignParentBottom="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Add Attachment" />
+
     </LinearLayout>
 
     <LinearLayout

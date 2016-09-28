@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 public class CameraTip extends AppCompatActivity implements View.OnClickListener {
 
@@ -105,9 +107,11 @@ public class CameraTip extends AppCompatActivity implements View.OnClickListener
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = new ImageView(this);
+            //inflate the attachment preview layout and populate it with a thumbnail
+            View attachmentPreview = getLayoutInflater().inflate(R.layout.fragment_attachment_preview, null);
+            ImageView imageView = (ImageView) attachmentPreview.findViewById(R.id.imageView);
             imageView.setImageBitmap(imageBitmap);
-            thumbnailLinearLayout.addView(imageView);
+            thumbnailLinearLayout.addView(attachmentPreview);
         }
     }
 
