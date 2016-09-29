@@ -57,6 +57,7 @@
         </activity>
         <activity android:name=".CameraTip"
             android:label="Camera Tip"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
