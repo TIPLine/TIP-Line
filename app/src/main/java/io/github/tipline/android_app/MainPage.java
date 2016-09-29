@@ -75,9 +75,10 @@ public class MainPage extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "News", "Settings" };
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News", "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
+        drawerList.setDivider(null);
 
 
         //Handle button presses for items in the hamburger menu
@@ -108,7 +109,7 @@ public class MainPage extends AppCompatActivity {
                         viewPager.setCurrentItem(1);
                         mDrawerLayout.closeDrawer(drawerList);
                         break;
-                    case 6:
+                    case 9:
                         startActivity(new Intent(MainPage.this, Settings.class));
                         break;
                 }
