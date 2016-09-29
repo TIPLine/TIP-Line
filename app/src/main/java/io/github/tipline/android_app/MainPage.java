@@ -91,7 +91,7 @@ public class MainPage extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         viewPager.setCurrentItem(0);
-                        mDrawerLayout.closeDrawer(drawerList);
+                        mDrawerLayout.closeDrawers();
                         break;
                     case 1:
                         startActivity(new Intent(MainPage.this, TipCall.class));
@@ -105,9 +105,9 @@ public class MainPage extends AppCompatActivity {
                     case 4:
                         startActivity(new Intent(MainPage.this, CameraTip.class));
                         break;
-                    case 5:
+                    case 8:
                         viewPager.setCurrentItem(1);
-                        mDrawerLayout.closeDrawer(drawerList);
+                        mDrawerLayout.closeDrawers();
                         break;
                     case 9:
                         startActivity(new Intent(MainPage.this, Settings.class));
