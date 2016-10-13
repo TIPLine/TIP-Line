@@ -211,7 +211,6 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener,
             }
         }
         stop.setEnabled(true);
-        //test
         record.setEnabled(false);
     }
     private void stopRec() throws IOException {
