@@ -1,12 +1,14 @@
 package io.github.tipline.android_app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class TipMenuFragment extends Fragment implements View.OnClickListener {
@@ -44,8 +46,9 @@ public class TipMenuFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.button_tip_call:
-                Intent myIntent = new Intent(getActivity().getApplication(), TipCall.class);
-                this.startActivity(myIntent);
+                call();
+//                Intent myIntent = new Intent(getActivity().getApplication(), TipCall.class);
+//                this.startActivity(myIntent);
                 break;
 
             case R.id.button_tip_voice:
@@ -62,6 +65,17 @@ public class TipMenuFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
+    }
+
+    private void call() {
+        Intent in=new Intent(Intent.ACTION_CALL, Uri.parse("6789100416"));
+        try{
+            startActivity(in);
+        }
+
+        catch (android.content.ActivityNotFoundException ex){
+            Toast.makeText(getActivity(),"yourActivity is not founded",Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
