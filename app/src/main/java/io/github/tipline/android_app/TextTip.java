@@ -1,25 +1,39 @@
 package io.github.tipline.android_app;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Xml;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.util.Log;
 
-public class TextTip extends AppCompatActivity implements View.OnClickListener{
+import org.xmlpull.v1.XmlSerializer;
+import java.io.StringWriter;
+
+
+public class TextTip extends AppCompatActivity implements View.OnClickListener {
 
     Button submitButton;
     Button cancelButton;
+    EditText editSubject;
+    EditText editMessage;
+
+    String name;
+    String location;
+    String phoneNumber;
+    String title;
+    String body;
+    String file;
+    String type = "text";
+
+    XMLGenerator xmlGenerator = new XMLGenerator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +51,20 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
         cancelButton = (Button) findViewById(R.id.textCancel);
         cancelButton.setOnClickListener(this);
 
+        editSubject = (EditText) findViewById(R.id.editSubject);
+        editMessage = (EditText) findViewById(R.id.editMessage);
+
+        name = "Bob Smith";
+        location = "Atlanta, GA";
+        phoneNumber = "555-1234";
+        file = "pic.jpg";
     }
 
     //Controls back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
+            //Respond to the action bar's Up/Home button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -56,6 +77,18 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
 
         switch (v.getId()) {
             case R.id.textSubmit:
+
+                //Creating the XML File
+                try {
+                    //This needs to be kept here
+                    title = editSubject.getText().toString();
+                    body = editMessage.getText().toString();
+                    String xml = xmlGenerator.createXML(type, name, location, phoneNumber, title, body, file);
+                    Log.v("XML FILE", xml);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 showConfirmationDialog();
                 break;
             case R.id.textCancel:
@@ -65,6 +98,7 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener{
                 break;
         }
     }
+
 
     private void showConfirmationDialog() {
 

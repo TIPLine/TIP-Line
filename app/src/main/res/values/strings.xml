@@ -10,4 +10,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_audio_tip">Audio Tip</string>
+
+    <string name="tip_subject">Subject</string>
+    <string name="tip_message">Message</string>
 </resources>
