@@ -5,14 +5,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,9 +34,11 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener,
     private Button record, play, stop;
     public static int RQS_RECORDING = 1;
     private MediaRecorder audioRecorder = null;
-//    private String outputFile = null;
+    private MediaPlayer mediaPlayer = null;
+    //private String outputFile = null;
     private Uri saved;
     boolean startRecording = false;
+    private File newFile;
 
 
     @Override
@@ -59,12 +64,56 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener,
         //outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gpp";
 
         //set up Media Recorder
-
-        submitButton.setOnClickListener(this);
-        cancelButton.setOnClickListener(this);
-        record.setOnClickListener(this);
-        stop.setOnClickListener(this);
-        play.setOnClickListener(this);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConfirmationDialog();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCancellationDialog();
+            }
+        });
+        record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    beginRecording();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    stopRec();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(newFile.getPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mediaPlayer.prepareAsync();
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mediaPlayer) {
+                        mediaPlayer.start();
+                    }
+                });
+            }
+        });
 
     }
 
@@ -82,31 +131,6 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.audioSubmit:
-                showConfirmationDialog();
-                break;
-            case R.id.audioCancel:
-                showCancellationDialog();
-
-            case R.id.record:
-                try {
-                    beginRecording();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            case R.id.stop_audio:
-                try {
-                    stopRec();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            default:
-                break;
-        }
-
     }
 
     private void showConfirmationDialog() {
@@ -192,7 +216,7 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener,
         if(externalStorageAvailible && !sdCar.exists()) {
             sdCar.mkdir();
         }
-        File newFile = new File(sdCar.getPath() + "/" + System.currentTimeMillis() + ".mp3");
+        newFile = new File(sdCar.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp3");
         if(audioRecorder == null) {
             audioRecorder = new MediaRecorder();
             audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -214,14 +238,19 @@ public class AudioTip extends AppCompatActivity implements View.OnClickListener,
         record.setEnabled(false);
     }
     private void stopRec() throws IOException {
-        if(startRecording) {
-            startRecording = false;
-            audioRecorder.stop();
-            audioRecorder.reset();
-            audioRecorder.release();
-            audioRecorder = null;
-            record.setEnabled(true);
-            play.setEnabled(true);
+        try {
+            if (startRecording) {
+                startRecording = false;
+                audioRecorder.stop();
+                audioRecorder.reset();
+                audioRecorder.release();
+                audioRecorder = null;
+                record.setEnabled(true);
+                stop.setEnabled(false);
+                play.setEnabled(true);
+            }
+        } catch(RuntimeException stopException) {
+            stopException.printStackTrace();
         }
     }
 }
