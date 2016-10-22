@@ -11,10 +11,19 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AudioTip"
     tools:showIn="@layout/activity_audio_tip"
-    android:background="#505050">
+    android:background="#ffffff">
 
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:isScrollContainer="true">
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -26,8 +35,8 @@
         android:layout_marginTop="36dp"
         android:textColor="@color/grey" />
 
-    <EditText
-        android:layout_width="wrap_content"
+        <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText3"
         android:layout_below="@+id/textView4"
@@ -36,9 +45,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:inputType="textMultiLine"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/darker_gray" />
 
-    <TextView
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
@@ -50,8 +59,8 @@
         android:layout_marginTop="50dp"
         android:textColor="@color/grey" />
 
-    <EditText
-        android:layout_width="wrap_content"
+        <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText4"
         android:layout_below="@+id/textView5"
@@ -60,77 +69,102 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:inputType="textMultiLine"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/darker_gray" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="Stop"
-        android:id="@+id/stop_audio"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/record"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4"
-        android:layout_alignBottom="@+id/record"
-        android:width="70dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_marginTop="50dp">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="Play"
-        android:id="@+id/play_audio"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/record"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:width="70dp" />
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Stop"
+                android:id="@+id/stop_audio"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/record"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/textView4"
+                android:layout_alignEnd="@+id/textView4"
+                android:layout_alignBottom="@+id/record"
+                android:width="70dp" />
 
-    <Button
-        android:layout_width="130dp"
-        android:layout_height="80dp"
-        android:text="Submit"
-        android:id="@+id/audioSubmit"
-        android:layout_marginBottom="18dp"
-        android:textSize="20dp"
-        android:background="@color/lightBlueTranslucent"
-        android:textColor="@android:color/background_light"
-        android:textStyle="normal|bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+            <Button
+                android:layout_height="wrap_content"
+                android:text="Record"
+                android:id="@+id/record"
+                android:textStyle="bold"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_below="@+id/editText4"
+                android:layout_toRightOf="@+id/audioCancel"
+                android:layout_toEndOf="@+id/audioCancel"
+                android:layout_width="match_parent"
+                android:layout_weight="0.98" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record"
-        android:id="@+id/record"
-        android:textStyle="bold"
-        android:layout_marginTop="87dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_below="@+id/editText4"
-        android:layout_toRightOf="@+id/audioCancel"
-        android:layout_toEndOf="@+id/audioCancel" />
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_height="wrap_content"
+                android:text="Play"
+                android:id="@+id/play_audio"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/record"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:width="70dp"
+                android:layout_width="70dp" />
 
-    <Button
-        android:layout_width="130dp"
-        android:layout_height="80dp"
-        android:text="Cancel"
-        android:id="@+id/audioCancel"
+        </LinearLayout>
 
-        android:textSize="20dp"
-        android:background="@color/colorAccent"
-        android:textColor="@android:color/background_light"
-        android:textStyle="normal|bold"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:layout_alignBottom="@+id/audioSubmit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="6dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp">
+
+            <Button
+                android:layout_height="80dp"
+                android:text="Cancel"
+                android:id="@+id/audioCancel"
+
+                android:textSize="20dp"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/background_light"
+                android:textStyle="normal|bold"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_alignBottom="@+id/audioSubmit"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="0dp"
+                android:layout_weight="1"
+                android:layout_width="120dp"
+                android:layout_marginRight="10dp" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:text="Submit"
+                android:id="@+id/audioSubmit"
+                android:layout_marginBottom="0dp"
+                android:textSize="20dp"
+                android:background="@color/lightBlueTranslucent"
+                android:textColor="@android:color/background_light"
+                android:textStyle="normal|bold"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

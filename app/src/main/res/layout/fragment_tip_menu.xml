@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@color/grey"
+    android:background="@android:color/background_light"
     android:fillViewport="false">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_marginTop="0dp"
                     android:textSize="35dp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/aadarkblue"
                     android:layout_centerHorizontal="true" />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                         android:layout_marginTop="0dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/darkBlue"
+                        android:background="@color/aalightblue"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                     <Button
@@ -66,7 +66,7 @@
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/darkBlue"
+                        android:background="@color/aalightblue"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                     <Button
@@ -78,7 +78,7 @@
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/darkBlue"
+                        android:background="@color/aalightblue"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                     <Button
@@ -90,7 +90,7 @@
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/darkBlue"
+                        android:background="@color/aalightblue"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                 </LinearLayout>
