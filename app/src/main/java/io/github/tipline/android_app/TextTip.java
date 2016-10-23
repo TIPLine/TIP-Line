@@ -7,15 +7,11 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Xml;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
-
-import org.xmlpull.v1.XmlSerializer;
-import java.io.StringWriter;
 
 
 public class TextTip extends AppCompatActivity implements View.OnClickListener {
