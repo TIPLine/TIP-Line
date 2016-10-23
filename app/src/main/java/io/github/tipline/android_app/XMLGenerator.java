@@ -5,6 +5,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ public class XMLGenerator {
     //Or make a class with the XML tags?
     //Fill in the appropriate information
 
-    public String createXML(String type, String name, String location, String phone_number, String
+    public String createXML(String type, String name, String location, String phoneNumber, String
                             title, String body, List<String> filePaths) throws IOException {
 
         XmlSerializer serializer = Xml.newSerializer();
@@ -41,7 +42,7 @@ public class XMLGenerator {
 
         //<phone_number>
         serializer.startTag("", "phone_number");
-        serializer.text(phone_number);
+        serializer.text(phoneNumber);
         serializer.endTag("", "phone_number");
         //</phone_number>
 
@@ -72,5 +73,11 @@ public class XMLGenerator {
         serializer.endDocument();
 
         return writer.toString();
+    }
+    public String createXML(String type, String name, String location, String phoneNumber, String
+            title, String body, String filePath) throws IOException {
+        List<String> filePaths = new ArrayList<>();
+        filePaths.add(filePath);
+        return createXML(type, name, location, phoneNumber, title, body, filePaths);
     }
 }
