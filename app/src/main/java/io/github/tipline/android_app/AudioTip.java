@@ -30,7 +30,7 @@ import java.io.File;
 
 import java.util.List;
 
-public class AudioTip extends AppCompatActivity implements View.OnClickListener, MediaStore.Audio.AudioColumns {
+public class AudioTip extends LocationGetterActivity implements View.OnClickListener, MediaStore.Audio.AudioColumns {
 
     private Button submitButton;
     private Button cancelButton;
