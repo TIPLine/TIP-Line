@@ -2,7 +2,10 @@ package io.github.tipline.android_app;
 
 import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
+
+import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 
 
 public class XMLGenerator {
@@ -11,7 +14,7 @@ public class XMLGenerator {
     //Fill in the appropriate information
 
     public String createXML(String type, String name, String location, String phone_number, String
-                            title, String body, String file) throws Exception {
+                            title, String body, List<String> filePaths) throws IOException {
 
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
@@ -54,11 +57,13 @@ public class XMLGenerator {
         serializer.endTag("", "body");
         //</body>
 
-        //<attachment> or File
-        serializer.startTag("", "attachment");
-        serializer.text(file);
-        serializer.endTag("", "attachment");
-        //</attachment>
+        for (String filePath: filePaths) {
+            //<attachment> or File
+            serializer.startTag("", "attachment");
+            serializer.text(filePath);
+            serializer.endTag("", "attachment");
+            //</attachment>
+        }
 
         serializer.endTag("", "tip");
         //</tip>

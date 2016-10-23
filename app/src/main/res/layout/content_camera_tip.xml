@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Tip Subject"
-                android:id="@+id/textView2"
+                android:id="@+id/title"
                 android:layout_marginTop="50dp"
                 android:textColor="@color/aadarkblue" />
 

@@ -27,11 +27,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CameraTip extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,10 +45,13 @@ public class CameraTip extends AppCompatActivity implements View.OnClickListener
     private LinearLayout thumbnailLinearLayout;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String currentPhotoPath;
+    private List<String> attachmentPaths; // locations of attached images
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        attachmentPaths = new ArrayList<>();
+
         setContentView(R.layout.activity_camera_tip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -172,12 +178,24 @@ public class CameraTip extends AppCompatActivity implements View.OnClickListener
         helpBuilder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        XMLGenerator xmlGenerator = new XMLGenerator();
+                        TextView titleView = (TextView) findViewById(R.id.title);
+                        EditText bodyView = (EditText) findViewById(R.id.subjectEditText);
+                        try {
+                            String xmlForEmail = xmlGenerator.createXML("camera", "username",
+                                    "United States", "placeholder phone number",
+                                    titleView.getText().toString(), bodyView.getText().toString(),
+                                    attachmentPaths);
+                        } catch (IOException e) {
+                            Log.e(CameraTip.class.getSimpleName(), "Issue creating XML");
+                        }
                         showTipSentDialog();
                     }
                 });
         helpBuilder.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
                     }
                 });
         AlertDialog helpDialog = helpBuilder.create();
