@@ -1,10 +1,12 @@
 package io.github.tipline.android_app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,7 +38,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CameraTip extends AppCompatActivity implements View.OnClickListener {
+import im.delight.android.location.SimpleLocation;
+
+public class CameraTip extends LocationGetterActivity implements View.OnClickListener {
 
     private static final int REQUEST_TAKE_PHOTO = 1;
     private Button submitButton;
@@ -46,6 +50,7 @@ public class CameraTip extends AppCompatActivity implements View.OnClickListener
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String currentPhotoPath;
     private List<String> attachmentPaths; // locations of attached images
+    private SimpleLocation locator; // get gps location with this
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,11 +186,13 @@ public class CameraTip extends AppCompatActivity implements View.OnClickListener
                         XMLGenerator xmlGenerator = new XMLGenerator();
                         TextView titleView = (TextView) findViewById(R.id.title);
                         EditText bodyView = (EditText) findViewById(R.id.subjectEditText);
+                        String country = getCountry();
                         try {
                             String xmlForEmail = xmlGenerator.createXML("camera", "username",
-                                    "United States", "placeholder phone number",
+                                    country, "placeholder phone number",
                                     titleView.getText().toString(), bodyView.getText().toString(),
                                     attachmentPaths);
+                            Log.v("XML FILE", xmlForEmail);
                         } catch (IOException e) {
                             Log.e(CameraTip.class.getSimpleName(), "Issue creating XML");
                         }
