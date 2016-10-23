@@ -23,7 +23,7 @@ public class LocationGetterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        countryName = null;
+        countryName = "unknown country";
         locator = new SimpleLocation(this, false, false, 500);
         locator.setListener(new SimpleLocation.Listener() {
 
