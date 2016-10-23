@@ -187,9 +187,11 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                         TextView titleView = (TextView) findViewById(R.id.title);
                         EditText bodyView = (EditText) findViewById(R.id.subjectEditText);
                         String country = getCountry();
+                        double locationLongitude = getLongitude();
+                        double locationLatitude = getLatitude();
                         try {
                             String xmlForEmail = xmlGenerator.createXML("camera", "username",
-                                    country, "placeholder phone number",
+                                    country, locationLongitude, locationLatitude, "placeholder phone number",
                                     titleView.getText().toString(), bodyView.getText().toString(),
                                     attachmentPaths);
                             Log.v("XML FILE", xmlForEmail);

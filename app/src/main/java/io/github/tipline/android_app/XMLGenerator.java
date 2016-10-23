@@ -14,7 +14,7 @@ public class XMLGenerator {
     //Or make a class with the XML tags?
     //Fill in the appropriate information
 
-    public String createXML(String type, String name, String location, String phoneNumber, String
+    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
                             title, String body, List<String> filePaths) throws IOException {
 
         XmlSerializer serializer = Xml.newSerializer();
@@ -34,12 +34,23 @@ public class XMLGenerator {
         serializer.endTag("", "name");
         //</name>
 
-        //<location>
-        serializer.startTag("", "location");
-        serializer.text(location);
-        serializer.endTag("", "location");
-        //</location>
+        //<locationCountry>
+        serializer.startTag("", "locationCountry");
+        serializer.text(locationCountry);
+        serializer.endTag("", "locationCountry");
+        //</locationCountry>
 
+        //<locationLongitude>
+        serializer.startTag("", "locationLongitude");
+        serializer.text(Double.toString(locationLongitude));
+        serializer.endTag("", "locationLongitude");
+        //</locationLongitude>
+
+        //<locationLatitude>
+        serializer.startTag("", "locationLatitude");
+        serializer.text(Double.toString(locationLatitude));
+        serializer.endTag("", "locationLatitude");
+        //</locationLatitude>
         //<phone_number>
         serializer.startTag("", "phone_number");
         serializer.text(phoneNumber);
@@ -74,10 +85,10 @@ public class XMLGenerator {
 
         return writer.toString();
     }
-    public String createXML(String type, String name, String location, String phoneNumber, String
+    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
             title, String body, String filePath) throws IOException {
         List<String> filePaths = new ArrayList<>();
         filePaths.add(filePath);
-        return createXML(type, name, location, phoneNumber, title, body, filePaths);
+        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, filePaths);
     }
 }

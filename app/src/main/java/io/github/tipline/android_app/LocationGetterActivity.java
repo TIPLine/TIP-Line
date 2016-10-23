@@ -61,6 +61,14 @@ public class LocationGetterActivity extends AppCompatActivity {
         return countryName;
     }
 
+    protected double getLongitude() {
+        return locator.getLongitude();
+    }
+
+    protected double getLatitude() {
+        return locator.getLatitude();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

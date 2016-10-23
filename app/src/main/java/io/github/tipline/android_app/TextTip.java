@@ -18,7 +18,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.StringWriter;
 
 
-public class TextTip extends AppCompatActivity implements View.OnClickListener {
+public class TextTip extends LocationGetterActivity implements View.OnClickListener {
 
     Button submitButton;
     Button cancelButton;
@@ -26,7 +26,6 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener {
     EditText editMessage;
 
     String name;
-    String location;
     String phoneNumber;
     String title;
     String body;
@@ -55,7 +54,6 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener {
         editMessage = (EditText) findViewById(R.id.editMessage);
 
         name = "Bob Smith";
-        location = "Atlanta, GA";
         phoneNumber = "555-1234";
         file = "pic.jpg";
     }
@@ -83,7 +81,10 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener {
                     //This needs to be kept here
                     title = editSubject.getText().toString();
                     body = editMessage.getText().toString();
-                    String xml = xmlGenerator.createXML(type, name, location, phoneNumber, title, body, file);
+                    String locationCountry = getCountry();
+                    double locationLongitude = getLongitude();
+                    double locationLatitude = getLatitude();
+                    String xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, file);
                     Log.v("XML FILE", xml);
                 } catch (Exception e) {
                     e.printStackTrace();
