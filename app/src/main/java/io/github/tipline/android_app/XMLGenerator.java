@@ -3,6 +3,7 @@ package io.github.tipline.android_app;
 import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class XMLGenerator {
     //Fill in the appropriate information
 
     public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
-                            title, String body, List<String> filePaths) throws IOException {
+                            title, String body, List<File> attachments) throws IOException {
 
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
@@ -69,10 +70,10 @@ public class XMLGenerator {
         serializer.endTag("", "body");
         //</body>
 
-        for (String filePath: filePaths) {
+        for (File attachment: attachments) {
             //<attachment> or File
             serializer.startTag("", "attachment");
-            serializer.text(filePath);
+            serializer.text(attachment.getName());
             serializer.endTag("", "attachment");
             //</attachment>
         }
@@ -82,13 +83,19 @@ public class XMLGenerator {
 
         //End Document
         serializer.endDocument();
-
         return writer.toString();
     }
     public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
-            title, String body, String filePath) throws IOException {
-        List<String> filePaths = new ArrayList<>();
-        filePaths.add(filePath);
-        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, filePaths);
+            title, String body, File file) throws IOException {
+        List<File> attachments = new ArrayList<>();
+        attachments.add(file);
+        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
+    }
+
+    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+            title, String body) throws IOException {
+        List<File> attachments = new ArrayList<>(); //empty attachments list
+
+        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
     }
 }

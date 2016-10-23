@@ -48,14 +48,16 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
     private ImageButton addAttachmentButton;
     private LinearLayout thumbnailLinearLayout;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private String currentPhotoPath;
-    private List<String> attachmentPaths; // locations of attached images
+    private File currentPhoto;
+    private List<File> attachments; // locations of attached images
+                                    // use these locations to construct xml and add attachments
+
     private SimpleLocation locator; // get gps location with this
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        attachmentPaths = new ArrayList<>();
+        attachments = new ArrayList<>();
 
         setContentView(R.layout.activity_camera_tip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -142,6 +144,8 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //save the attachment path for sending it in email later
+        attachments.add(currentPhoto);
 
         //inflate the attachment preview layout and populate it with a thumbnail
         View attachmentPreview = getLayoutInflater().inflate(R.layout.fragment_attachment_preview, null);
@@ -154,7 +158,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
 
@@ -166,7 +170,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
 
-        Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
         imageView.setImageBitmap(imageBitmap);
         thumbnailLinearLayout.addView(attachmentPreview);
 
@@ -193,7 +197,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                             String xmlForEmail = xmlGenerator.createXML("camera", "username",
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
                                     titleView.getText().toString(), bodyView.getText().toString(),
-                                    attachmentPaths);
+                                    attachments);
                             Log.v("XML FILE", xmlForEmail);
                         } catch (IOException e) {
                             Log.e(CameraTip.class.getSimpleName(), "Issue creating XML");
@@ -262,7 +266,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
+        currentPhoto = image;
         return image;
     }
 }

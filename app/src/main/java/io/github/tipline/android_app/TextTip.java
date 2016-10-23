@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
 import java.io.StringWriter;
 
 
@@ -29,7 +31,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
     String phoneNumber;
     String title;
     String body;
-    String file;
+    File file;
     String type = "text";
 
     XMLGenerator xmlGenerator = new XMLGenerator();
@@ -55,7 +57,6 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
 
         name = "Bob Smith";
         phoneNumber = "555-1234";
-        file = "pic.jpg";
     }
 
     //Controls back button
@@ -84,7 +85,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
                     String locationCountry = getCountry();
                     double locationLongitude = getLongitude();
                     double locationLatitude = getLatitude();
-                    String xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, file);
+                    String xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
                     Log.v("XML FILE", xml);
                 } catch (Exception e) {
                     e.printStackTrace();
