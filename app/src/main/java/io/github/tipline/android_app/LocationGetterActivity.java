@@ -74,17 +74,19 @@ public class LocationGetterActivity extends AppCompatActivity {
         super.onResume();
 
         // make the device update its location
-        locator.beginUpdates();
+        if (locator.hasLocationEnabled()) {
+            locator.beginUpdates();
+        }
 
     }
 
     @Override
     protected void onPause() {
-        // stop location updates (saves battery)
-        locator.endUpdates();
-
-
         super.onPause();
+        // stop location updates (saves battery)
+        if (locator.hasLocationEnabled()) {
+            locator.endUpdates();
+        }
     }
 
 }
