@@ -2,6 +2,7 @@ package io.github.tipline.android_app;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlSerializer;
 
@@ -33,6 +35,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
     String body;
     File file;
     String type = "text";
+    String xml;
 
     XMLGenerator xmlGenerator = new XMLGenerator();
 
@@ -85,7 +88,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
                     String locationCountry = getCountry();
                     double locationLongitude = getLongitude();
                     double locationLatitude = getLatitude();
-                    String xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
+                    xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
                     Log.v("XML FILE", xml);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -111,7 +114,9 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         helpBuilder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        showTipSentDialog();
+                        sendEmail();
+                        //commented out for now because dialog shows up before email is actually sent.
+                        //showTipSentDialog();
                     }
                 });
         helpBuilder.setNegativeButton("Cancel",
@@ -162,5 +167,23 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         helpDialog.show();
     }
 
+    private void sendEmail() {
+        Log.i("Send email", "");
+        String[] TO = {"tiplinetestemail@gmail.com"};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, xml);
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(TextTip.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
