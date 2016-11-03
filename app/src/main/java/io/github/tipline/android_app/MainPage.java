@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -108,7 +109,7 @@ public class MainPage extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News", "Settings" };
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News"};//, "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
         drawerList.setDivider(null);
@@ -142,13 +143,14 @@ public class MainPage extends AppCompatActivity {
                         viewPager.setCurrentItem(1);
                         mDrawerLayout.closeDrawers();
                         break;
-                    case 9:
-                        startActivity(new Intent(MainPage.this, Settings.class));
-                        break;
+//                    case 9:
+//                        startActivity(new Intent(MainPage.this, Settings.class));
+//                        break;
                 }
             }
         });
     }
+
 
 
     private void setupDrawer() {
