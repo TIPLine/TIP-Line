@@ -2,7 +2,12 @@ package io.github.tipline.android_app;
 
 import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class XMLGenerator {
@@ -10,8 +15,8 @@ public class XMLGenerator {
     //Or make a class with the XML tags?
     //Fill in the appropriate information
 
-    public String createXML(String type, String name, String location, String phone_number, String
-                            title, String body, String file) throws Exception {
+    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+                            title, String body, List<File> attachments) throws IOException {
 
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
@@ -30,15 +35,26 @@ public class XMLGenerator {
         serializer.endTag("", "name");
         //</name>
 
-        //<location>
-        serializer.startTag("", "location");
-        serializer.text(location);
-        serializer.endTag("", "location");
-        //</location>
+        //<locationCountry>
+        serializer.startTag("", "locationCountry");
+        serializer.text(locationCountry);
+        serializer.endTag("", "locationCountry");
+        //</locationCountry>
 
+        //<locationLongitude>
+        serializer.startTag("", "locationLongitude");
+        serializer.text(Double.toString(locationLongitude));
+        serializer.endTag("", "locationLongitude");
+        //</locationLongitude>
+
+        //<locationLatitude>
+        serializer.startTag("", "locationLatitude");
+        serializer.text(Double.toString(locationLatitude));
+        serializer.endTag("", "locationLatitude");
+        //</locationLatitude>
         //<phone_number>
         serializer.startTag("", "phone_number");
-        serializer.text(phone_number);
+        serializer.text(phoneNumber);
         serializer.endTag("", "phone_number");
         //</phone_number>
 
@@ -54,18 +70,32 @@ public class XMLGenerator {
         serializer.endTag("", "body");
         //</body>
 
-        //<attachment> or File
-        serializer.startTag("", "attachment");
-        serializer.text(file);
-        serializer.endTag("", "attachment");
-        //</attachment>
+        for (File attachment: attachments) {
+            //<attachment> or File
+            serializer.startTag("", "attachment");
+            serializer.text(attachment.getName());
+            serializer.endTag("", "attachment");
+            //</attachment>
+        }
 
         serializer.endTag("", "tip");
         //</tip>
 
         //End Document
         serializer.endDocument();
-
         return writer.toString();
+    }
+    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+            title, String body, File file) throws IOException {
+        List<File> attachments = new ArrayList<>();
+        attachments.add(file);
+        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
+    }
+
+    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+            title, String body) throws IOException {
+        List<File> attachments = new ArrayList<>(); //empty attachments list
+
+        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
     }
 }

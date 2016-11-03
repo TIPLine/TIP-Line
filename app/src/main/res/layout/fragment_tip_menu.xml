@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@android:color/background_light"
     android:fillViewport="false">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/long_logo"
+        android:id="@+id/imageView3" />
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,28 +31,18 @@
             android:layout_weight="0.7"
             android:gravity="center_horizontal|top">
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal|top"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Tip Line"
-                    android:id="@+id/textView2"
-                    android:layout_below="@+id/tab_layout"
-                    android:layout_marginTop="0dp"
-                    android:textSize="35dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/aadarkblue"
-                    android:layout_centerHorizontal="true" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|top"
-                    android:layout_marginTop="40dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
                     <Button
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
