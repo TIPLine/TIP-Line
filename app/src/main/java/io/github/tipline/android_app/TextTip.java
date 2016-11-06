@@ -1,9 +1,12 @@
 package io.github.tipline.android_app;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +40,8 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
     String type = "text";
     String xml;
 
+    GMailSender sender;
+
     XMLGenerator xmlGenerator = new XMLGenerator();
 
     @Override
@@ -60,6 +65,12 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
 
         name = "Bob Smith";
         phoneNumber = "555-1234";
+
+        // Setting up email info
+        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
+                Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     //Controls back button
@@ -115,8 +126,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         sendEmail();
-                        //commented out for now because dialog shows up before email is actually sent.
-                        //showTipSentDialog();
+                        showTipSentDialog();
                     }
                 });
         helpBuilder.setNegativeButton("Cancel",
@@ -168,22 +178,11 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
     }
 
     private void sendEmail() {
-        Log.i("Send email", "");
-        String[] TO = {"tiplinetestemail@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, title);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, xml);
-
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
+            // Add subject, Body, your mail Id, and receiver mail Id.
+            sender.sendMail(title, xml, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
         }
-        catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(TextTip.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        catch (Exception ex) {
         }
     }
 }
