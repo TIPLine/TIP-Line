@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -35,9 +36,7 @@ public class MainPage extends AppCompatActivity {
     private ViewPager viewPager;
     private int MY_PERMISSIONS_REQUEST_RECORD_AUDIO;
     private int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
-    private int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
-    private int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION;
-
+    private static final int TAG_CODE_PERMISSION_LOCATION = 3333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,31 +96,31 @@ public class MainPage extends AppCompatActivity {
             }
         }
         if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             }
         }
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-            }
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION },
+                    TAG_CODE_PERMISSION_LOCATION);
         }
     }
 
     private void addDrawerItems() {
-        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News", "Settings" };
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News"};//, "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
         drawerList.setDivider(null);
@@ -155,13 +154,14 @@ public class MainPage extends AppCompatActivity {
                         viewPager.setCurrentItem(1);
                         mDrawerLayout.closeDrawers();
                         break;
-                    case 9:
-                        startActivity(new Intent(MainPage.this, Settings.class));
-                        break;
+//                    case 9:
+//                        startActivity(new Intent(MainPage.this, Settings.class));
+//                        break;
                 }
             }
         });
     }
+
 
 
     private void setupDrawer() {
@@ -230,4 +230,3 @@ public class MainPage extends AppCompatActivity {
 
 
 }
-
