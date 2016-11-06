@@ -1,11 +1,16 @@
 package io.github.tipline.android_app;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,17 +79,19 @@ public class LocationGetterActivity extends AppCompatActivity {
         super.onResume();
 
         // make the device update its location
-        locator.beginUpdates();
+        if (locator.hasLocationEnabled()) {
+            locator.beginUpdates();
+        }
 
     }
 
     @Override
     protected void onPause() {
-        // stop location updates (saves battery)
-        locator.endUpdates();
-
-
         super.onPause();
+        // stop location updates (saves battery)
+        if (locator.hasLocationEnabled()) {
+            locator.endUpdates();
+        }
     }
 
 }
