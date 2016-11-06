@@ -169,7 +169,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
 
     private void sendEmail() {
         Log.i("Send email", "");
-        String[] TO = {"tiplinetestemail@gmail.com"};
+        String[] TO = {"mikeadkison@gmail.com"};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
         emailIntent.setData(Uri.parse("mailto:"));

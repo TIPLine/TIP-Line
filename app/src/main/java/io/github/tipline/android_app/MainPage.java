@@ -36,7 +36,7 @@ public class MainPage extends AppCompatActivity {
     private ViewPager viewPager;
     private int MY_PERMISSIONS_REQUEST_RECORD_AUDIO;
     private int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
-
+    private static final int TAG_CODE_PERMISSION_LOCATION = 3333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,17 @@ public class MainPage extends AppCompatActivity {
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             }
+        }
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION },
+                    TAG_CODE_PERMISSION_LOCATION);
         }
     }
 

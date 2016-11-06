@@ -21,6 +21,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public class TipCall extends AppCompatActivity  {
 
     @Override
@@ -29,8 +35,31 @@ public class TipCall extends AppCompatActivity  {
         //setContentView(R.layout.activity_tip_call);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+        getPhoneNumbers();
         call();
 
+    }
+
+    public JSONObject getPhoneNumbers() {
+        String jsonStr = null;
+        try {
+            InputStream inputStream = getAssets().open("mynumbers.txt");
+            int size = inputStream.available();
+            byte[] byteBuffer = new byte[size];
+            inputStream.read(byteBuffer);
+            inputStream.close();
+            jsonStr = new String(byteBuffer, "UTF-8");
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        try {
+            return new JSONObject(jsonStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void call() {
