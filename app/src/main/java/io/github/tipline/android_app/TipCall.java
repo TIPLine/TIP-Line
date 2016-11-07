@@ -27,17 +27,22 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class TipCall extends AppCompatActivity  {
-
+public class TipCall extends LocationGetterActivity  {
+    private String locationCountry = "United States";
+    private JSONObject jsonNumbers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_tip_call);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        getPhoneNumbers();
-        call();
-
+        jsonNumbers = getPhoneNumbers();
+        try {
+            String phoneNum = (String) jsonNumbers.get(locationCountry); // get the appropriate phone number for country we are in or default to United States.
+            call(phoneNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public JSONObject getPhoneNumbers() {
@@ -62,15 +67,17 @@ public class TipCall extends AppCompatActivity  {
         }
     }
 
-    public void call() {
+    public void call(String phoneNum) {
         int permissionCheck = ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.CALL_PHONE);
 
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                     this, new String[]{Manifest.permission.CALL_PHONE}, 123);
         } else {
-
-            Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:6789100416"));
+            phoneNum = "tel:" + phoneNum;
+            Intent in = new Intent(Intent.ACTION_CALL, Uri.parse(phoneNum));
+            System.out.println("phone num: " + phoneNum);
+            //Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:6789100416"));
             try {
                 startActivity(in);
             } catch (android.content.ActivityNotFoundException ex) {
@@ -86,7 +93,12 @@ public class TipCall extends AppCompatActivity  {
 
             case 123:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    call();
+                    try {
+                        String phoneNum = (String) jsonNumbers.get(locationCountry); // get the appropriate phone number for country we are in or default to United States.
+                        call(phoneNum);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     Log.d("TAG", "Call Permission Not Granted");
                 }
