@@ -13,4 +13,6 @@
 
     <string name="tip_subject">Subject</string>
     <string name="tip_message">Message</string>
+    <string name="phone_num_file">nums.json</string>
+    <string name="phone_num_temp_file">nums.tmp</string>
 </resources>

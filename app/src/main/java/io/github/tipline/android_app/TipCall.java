@@ -24,8 +24,12 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class TipCall extends LocationGetterActivity  {
     private String locationCountry = "United States";
@@ -41,19 +45,48 @@ public class TipCall extends LocationGetterActivity  {
             String phoneNum = (String) jsonNumbers.get(locationCountry); // get the appropriate phone number for country we are in or default to United States.
             call(phoneNum);
         } catch (JSONException e) {
-            e.printStackTrace();
+            try {
+                call((String) jsonNumbers.get("United States")); // if there is no phone number for this country, default to United States
+            } catch (JSONException e1) {
+                e1.printStackTrace(); //no number for united states???
+            }
         }
     }
 
     public JSONObject getPhoneNumbers() {
+        //see if a file of nums has been downloaded from internet yet (http://tipnumbers.airlineamb.org/mynumbers.txt)
+        BufferedReader input = null;
+        File file = null;
+        StringBuffer buffer = null;
+        boolean foundDownloadedFile = false;
+        try {
+            file = new File(getFilesDir(), this.getString(R.string.phone_num_file));
+            input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            buffer = new StringBuffer();
+            String line;
+            while ((line = input.readLine()) != null) {
+                buffer.append(line);
+            }
+            foundDownloadedFile = true;
+            System.out.println("read " + buffer.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //fallback to the numbers included in the app install if there are none that have been downloaded from the internet in the past
         String jsonStr = null;
         try {
-            InputStream inputStream = getAssets().open("mynumbers.txt");
-            int size = inputStream.available();
-            byte[] byteBuffer = new byte[size];
-            inputStream.read(byteBuffer);
-            inputStream.close();
-            jsonStr = new String(byteBuffer, "UTF-8");
+            if (foundDownloadedFile) { //use the numbesr downloaded from internet
+                jsonStr = buffer.toString();
+            } else { //fallback to assets numbers file packaged with the app download
+                InputStream inputStream = getAssets().open("mynumbers.txt");
+                int size = inputStream.available();
+                byte[] byteBuffer = new byte[size];
+                inputStream.read(byteBuffer);
+                inputStream.close();
+                jsonStr = new String(byteBuffer, "UTF-8");
+            }
+
         } catch (IOException e)
         {
             e.printStackTrace();
