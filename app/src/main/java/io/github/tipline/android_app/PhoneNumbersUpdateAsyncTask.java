@@ -50,7 +50,7 @@ public class PhoneNumbersUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> 
         }
         if (noException) {
             //save nums to storage
-            String fileName = git ad;
+            String fileName = context.getString(R.string.phone_num_file);
             String tmpFileName = context.getString(R.string.phone_num_temp_file);
             FileOutputStream outputStream = null;
             try {
