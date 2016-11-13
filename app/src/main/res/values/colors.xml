@@ -6,9 +6,13 @@
     <color name="colorAccent">#ef1b45</color>
     <color name="darkBlue">#0C367F</color>
     <color name="lightBlue">#289CAF</color>
-    <color name="grey">#b9babc</color>
+    <color name="grey">#0c367f</color>
     <color name="darkBlueTranslucent">#CC0C367F</color>
-    <color name="lightBlueTranslucent">#08cec2</color>
+    <color name="lightBlueTranslucent">#289caf</color>
     <color name="greyTranslucent">#CCB9BABC</color>
+    <color name="aalightblue">#289caf</color>
+    <color name="aadarkblue">#0c367f</color>
+
+
 
 </resources>

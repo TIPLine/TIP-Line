@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import java.io.File;
 
 
-public class TextTip extends AppCompatActivity implements View.OnClickListener {
+public class TextTip extends LocationGetterActivity implements View.OnClickListener {
 
     Button submitButton;
     Button cancelButton;
@@ -22,11 +22,10 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener {
     EditText editMessage;
 
     String name;
-    String location;
     String phoneNumber;
     String title;
     String body;
-    String file;
+    File file;
     String type = "text";
 
     XMLGenerator xmlGenerator = new XMLGenerator();
@@ -51,9 +50,7 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener {
         editMessage = (EditText) findViewById(R.id.editMessage);
 
         name = "Bob Smith";
-        location = "Atlanta, GA";
         phoneNumber = "555-1234";
-        file = "pic.jpg";
     }
 
     //Controls back button
@@ -79,7 +76,10 @@ public class TextTip extends AppCompatActivity implements View.OnClickListener {
                     //This needs to be kept here
                     title = editSubject.getText().toString();
                     body = editMessage.getText().toString();
-                    String xml = xmlGenerator.createXML(type, name, location, phoneNumber, title, body, file);
+                    String locationCountry = getCountry();
+                    double locationLongitude = getLongitude();
+                    double locationLatitude = getLatitude();
+                    String xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
                     Log.v("XML FILE", xml);
                 } catch (Exception e) {
                     e.printStackTrace();
