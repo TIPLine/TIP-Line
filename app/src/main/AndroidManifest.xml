@@ -14,6 +14,8 @@
     <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -42,6 +44,7 @@
         <activity
             android:name=".AudioTip"
             android:label="@string/title_activity_audio_tip"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -63,6 +66,7 @@
         <activity
             android:name=".TextTip"
             android:label="@string/text_tip"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

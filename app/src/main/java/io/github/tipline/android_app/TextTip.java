@@ -1,17 +1,28 @@
 package io.github.tipline.android_app;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Xml;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.Toast;
+
+import org.xmlpull.v1.XmlSerializer;
+
 import java.io.File;
+import java.io.StringWriter;
 
 
 public class TextTip extends LocationGetterActivity implements View.OnClickListener {
@@ -27,6 +38,9 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
     String body;
     File file;
     String type = "text";
+    String xml;
+
+    GMailSender sender;
 
     XMLGenerator xmlGenerator = new XMLGenerator();
 
@@ -51,6 +65,12 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
 
         name = "Bob Smith";
         phoneNumber = "555-1234";
+
+        // Setting up email info
+        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
+                Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     //Controls back button
@@ -79,7 +99,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
                     String locationCountry = getCountry();
                     double locationLongitude = getLongitude();
                     double locationLatitude = getLatitude();
-                    String xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
+                    xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
                     Log.v("XML FILE", xml);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -105,6 +125,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         helpBuilder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        sendEmail();
                         showTipSentDialog();
                     }
                 });
@@ -156,5 +177,12 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         helpDialog.show();
     }
 
-
+    private void sendEmail() {
+        try {
+            // Add subject, Body, your mail Id, and receiver mail Id.
+            sender.sendMail(title, xml, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+        }
+        catch (Exception ex) {
+        }
+    }
 }
