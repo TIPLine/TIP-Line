@@ -12,4 +12,11 @@
     tools:context="io.github.tipline.android_app.TipCall"
     tools:showIn="@layout/activity_tip_call">
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
 </RelativeLayout>

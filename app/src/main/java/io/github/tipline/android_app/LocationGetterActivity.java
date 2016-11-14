@@ -80,6 +80,7 @@ public class LocationGetterActivity extends AppCompatActivity {
 
         // make the device update its location
         if (locator.hasLocationEnabled()) {
+            Log.d(getClass().getSimpleName(), "begining location updates");
             locator.beginUpdates();
         }
 
