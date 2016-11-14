@@ -9,18 +9,25 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
     private Session session;
+    private Multipart multipart;
+
 
     static {
         Security.addProvider(new JSSEProvider());
@@ -31,6 +38,7 @@ public class GMailSender extends javax.mail.Authenticator {
         this.password = password;
 
         Properties props = new Properties();
+        multipart = new MimeMultipart();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", mailhost);
         props.put("mail.smtp.auth", "true");
@@ -61,7 +69,7 @@ public class GMailSender extends javax.mail.Authenticator {
                 body.getBytes(), "text/plain"));
         message.setSender(new InternetAddress(sender));
         message.setSubject(subject);
-        message.setDataHandler(handler);
+        //message.setDataHandler(handler);
 
         if (recipients.indexOf(',') > 0)
             message.setRecipients(Message.RecipientType.TO,
@@ -69,6 +77,13 @@ public class GMailSender extends javax.mail.Authenticator {
         else
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(
                     recipients));
+
+        BodyPart messageBody = new MimeBodyPart();
+        messageBody.setText(body);
+
+        multipart.addBodyPart(messageBody);
+        message.setContent(multipart);
+
         Transport.send(message);
     }
 
@@ -109,5 +124,13 @@ public class GMailSender extends javax.mail.Authenticator {
         public OutputStream getOutputStream() throws IOException {
             throw new IOException("Not Supported");
         }
+    }
+
+    public void addAttachment(String filename) throws Exception {
+        BodyPart messageBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(filename);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(filename);
+        multipart.addBodyPart(messageBodyPart);
     }
 }

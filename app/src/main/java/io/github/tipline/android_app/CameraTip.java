@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -53,6 +54,10 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                                     // use these locations to construct xml and add attachments
 
     private SimpleLocation locator; // get gps location with this
+    private GMailSender sender;
+    private TextView titleView;
+    private String xmlForEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,12 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
 
 
         thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnail_layout);
+
+        // Setting up email info
+        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
+                Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
     }
 
@@ -188,13 +199,13 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         XMLGenerator xmlGenerator = new XMLGenerator();
-                        TextView titleView = (TextView) findViewById(R.id.title);
+                        titleView = (TextView) findViewById(R.id.title);
                         EditText bodyView = (EditText) findViewById(R.id.subjectEditText);
                         String country = getCountry();
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
                         try {
-                            String xmlForEmail = xmlGenerator.createXML("camera", "username",
+                            xmlForEmail = xmlGenerator.createXML("camera", "username",
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
                                     titleView.getText().toString(), bodyView.getText().toString(),
                                     attachments);
@@ -202,6 +213,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                         } catch (IOException e) {
                             Log.e(CameraTip.class.getSimpleName(), "Issue creating XML");
                         }
+                        sendEmail();
                         showTipSentDialog();
                     }
                 });
@@ -268,5 +280,21 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         // Save a file: path for use with ACTION_VIEW intents
         currentPhoto = image;
         return image;
+    }
+
+    private void sendEmail() {
+        for (int i = 0; i < attachments.size(); i++) {
+            try {
+                sender.addAttachment(attachments.get(i).getPath());
+            } catch (Exception e) {
+
+            }
+        }
+        try {
+            // Add subject, Body, your mail Id, and receiver mail Id.
+            sender.sendMail(titleView.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+        }
+        catch (Exception ex) {
+        }
     }
 }
