@@ -93,7 +93,11 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         long startWaitTime = System.currentTimeMillis();
         // get the gps lock
         while (!gotGpsLock.get() && System.currentTimeMillis() - startWaitTime < TIMEOUT) {
-
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         Log.d(this.getClass().getSimpleName(), "done waiting for gps lock");
         if (!gotGpsLock.get()) {
@@ -133,7 +137,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         Log.d(getClass().getSimpleName(), "starting to call");
         call(phoneNum);
         callAttempted.set(true);
-        Log.d(getClass().getSimpleName(), "set callattempted to true");
+        Log.d(getClass().getSimpleName(), "set call attempted to true");
         return true;
     }
 
