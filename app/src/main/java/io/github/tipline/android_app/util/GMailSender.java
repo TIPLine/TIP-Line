@@ -1,6 +1,7 @@
 package io.github.tipline.android_app.util;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -92,6 +93,7 @@ public class GMailSender extends javax.mail.Authenticator {
             protected Boolean doInBackground(final Void ... params ) {
                 try {
                     Transport.send(message);
+                    Log.d(getClass().getSimpleName(), "finished sending email");
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }
