@@ -57,23 +57,6 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                 final double latitude = locator.getLatitude();
                 final double longitude = locator.getLongitude();
 
-                // http://stackoverflow.com/questions/11082681/get-country-from-coordinates
-                Geocoder gcd = new Geocoder(context, Locale.getDefault());
-                List<Address> addresses = null;
-                boolean countryLookupSuccess = true;
-                try {
-                    addresses = gcd.getFromLocation(latitude, longitude, 1);
-                } catch (IOException e) {
-                    countryName = "unknown country";
-                    countryLookupSuccess = false;
-                }
-
-                if (countryLookupSuccess && addresses.size() > 0) {
-                    countryName = addresses.get(0).getCountryName();
-                } else {
-                    countryName = "unknown country";
-                    System.out.println(addresses);
-                }
                 gotGpsLock.set(true);
             }
         });
@@ -101,7 +84,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         }
         Log.d(this.getClass().getSimpleName(), "done waiting for gps lock");
         if (!gotGpsLock.get()) {
-            final CharSequence text = "Couldn't attain GPS lock. Calling phone number for " + DEFAULT_COUNTRY;
+            final CharSequence text = "Couldn't attain GPS lock";
             final int duration = Toast.LENGTH_LONG;
 
             ((Activity) context).runOnUiThread(new Runnable() {
@@ -114,55 +97,40 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
             waitFor(2000); //give user time to read toast
         }
         String phoneNum = null;
-        // look for the appropriate phone number
-        if (!gotGpsLock.get() || countryName.equals("unknown country")) {
-            // if can't find country, use a default phone number
+
+        if (gotGpsLock.get()) {
+            // TRY TO GET THE COUNTRY NAME if we found our long and lat
+            // http://stackoverflow.com/questions/11082681/get-country-from-coordinates
+            Geocoder gcd = new Geocoder(context, Locale.getDefault());
+            List<Address> addresses = null;
+            boolean countryLookupSuccess = true;
             try {
-                List<CharSequence> countryOptions = new ArrayList<>();
-                for (int i = 0; i < jsonNumbers.names().length(); i++) {
-                    countryOptions.add(jsonNumbers.names().getString(i));
-                    System.out.println("aded country" + jsonNumbers.names().getString(i));
-
-                }
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Could not geolocate - Choose a country");
-                builder.setItems(countryOptions.toArray(new CharSequence[countryOptions.size()]), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            String phoneNum = jsonNumbers.getString(jsonNumbers.names().getString(which));
-                            // call the chosen phone number
-                            Log.d(getClass().getSimpleName(), "starting to user-selected country (geolocation has failed)");
-                            call(phoneNum);
-                            callAttempted.set(true);
-                            Log.d(getClass().getSimpleName(), "set call attempted to true");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                ((Activity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        builder.show();
-                    }
-                });
-                phoneNum = (String) jsonNumbers.get(DEFAULT_COUNTRY);
-
-
-            } catch (JSONException e) {
-                e.printStackTrace(); // if can't find default phone number, error out
+                addresses = gcd.getFromLocation(locator.getLatitude(), locator.getLongitude(), 1);
+            } catch (IOException e) {
+                countryName = "unknown country";
+                countryLookupSuccess = false;
             }
+
+            if (countryLookupSuccess && addresses.size() > 0) {
+                countryName = addresses.get(0).getCountryName();
+            } else {
+                countryName = "unknown country";
+                System.out.println(addresses);
+            }
+        }
+
+
+        // look for the appropriate phone number
+
+        //if couldnt get long and lat or couldnt get country name
+        if (!gotGpsLock.get() || countryName.equals("unknown country")) {
+            // if can't find what country the user is in, ask user which country to call.
+            userSelectCountryToCall();
         } else { // if found country location
             try {
                 phoneNum = (String) jsonNumbers.get(countryName); // look for the appropriate phone numb for this country
             } catch (JSONException e) {
-                try {
-                    phoneNum = (String) jsonNumbers.get(DEFAULT_COUNTRY); //if can't find the country in the list of phone numbers, use default phone number
-                } catch (JSONException e1) {
-                    e.printStackTrace(); // if can't find default phone number, error out
-                }
+                userSelectCountryToCall();//if can't find the user's location country in the list of phone numbers, ask user to select country to call
             }
 
             // call the chosen phone number
@@ -173,6 +141,45 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         return true;
+    }
+
+    private void userSelectCountryToCall() {
+        try {
+            List<CharSequence> countryOptions = new ArrayList<>();
+            for (int i = 0; i < jsonNumbers.names().length(); i++) {
+                countryOptions.add(jsonNumbers.names().getString(i));
+                System.out.println("aded country" + jsonNumbers.names().getString(i));
+
+            }
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Could not geolocate - Choose a country");
+            builder.setItems(countryOptions.toArray(new CharSequence[countryOptions.size()]), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        String phoneNum = jsonNumbers.getString(jsonNumbers.names().getString(which));
+                        // call the chosen phone number
+                        Log.d(getClass().getSimpleName(), "starting to user-selected country (geolocation has failed)");
+                        call(phoneNum);
+                        callAttempted.set(true);
+                        Log.d(getClass().getSimpleName(), "set call attempted to true");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    builder.show();
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace(); // if can't find default phone number, error out
+        }
     }
 
     private void waitFor(long sleepTime) {
