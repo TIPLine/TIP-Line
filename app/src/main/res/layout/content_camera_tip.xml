@@ -17,6 +17,8 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:fadeScrollbars="false"
+        android:scrollbarFadeDuration="0"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,18 +89,40 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/add_attachment"
+                    android:id="@+id/add_image_attachment_button"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentBottom="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_image_attachment_text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Add Image Attachment"
+                    android:textSize="25dp"
+                    android:textColor="@color/aalightblue" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/add_video_attachment_button"
                     android:src="@drawable/ic_add_black_24dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:layout_alignParentBottom="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/add_attachment_text"
+                    android:id="@+id/add_video_attachment_text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Add Attachment"
+                    android:text="Add Video Attachment"
+                    android:textSize="25dp"
                     android:textColor="@color/aalightblue" />
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

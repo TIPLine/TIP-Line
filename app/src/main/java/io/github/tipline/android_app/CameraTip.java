@@ -1,25 +1,17 @@
 package io.github.tipline.android_app;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -46,9 +37,10 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
     private static final int REQUEST_TAKE_PHOTO = 1;
     private Button submitButton;
     private Button cancelButton;
-    private ImageButton addAttachmentButton;
+    private ImageButton addImageAttachmentButton;
     private LinearLayout thumbnailLinearLayout;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_TAKE_VIDEO = 2;
     private File currentPhoto;
     private List<File> attachments; // locations of attached images
                                     // use these locations to construct xml and add attachments
@@ -77,11 +69,17 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         cancelButton = (Button) findViewById(R.id.textCancel);
         cancelButton.setOnClickListener(this);
 
-        addAttachmentButton = (ImageButton) findViewById(R.id.add_attachment);
-        addAttachmentButton.setOnClickListener(this);
+        addImageAttachmentButton = (ImageButton) findViewById(R.id.add_image_attachment_button);
+        addImageAttachmentButton.setOnClickListener(this);
 
-        TextView addAttachmentText = (TextView) findViewById(R.id.add_attachment_text);
-        addAttachmentText.setOnClickListener(this);
+        TextView addImageAttachmentText = (TextView) findViewById(R.id.add_image_attachment_text);
+        addImageAttachmentText.setOnClickListener(this);
+
+        ImageButton addVideoAttachmentButton = (ImageButton) findViewById(R.id.add_video_attachment_button);
+        addVideoAttachmentButton.setOnClickListener(this);
+
+        TextView addVideoAttachmentText = (TextView) findViewById(R.id.add_video_attachment_text);
+        addVideoAttachmentText.setOnClickListener(this);
 
 
         thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnail_layout);
@@ -116,11 +114,17 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
             case R.id.textCancel:
                 showCancellationDialog();
                 break;
-            case R.id.add_attachment:
+            case R.id.add_image_attachment_button:
                 dispatchTakePictureIntent();
                 break;
-            case R.id.add_attachment_text:
+            case R.id.add_image_attachment_text:
                 dispatchTakePictureIntent();
+                break;
+            case R.id.add_video_attachment_button:
+                dispatchTakeVideoIntent();
+                break;
+            case R.id.add_video_attachment_text:
+                dispatchTakeVideoIntent();
                 break;
             default:
                 break;
@@ -161,36 +165,43 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //save the attachment path for sending it in email later
-        attachments.add(currentPhoto);
+        if (RESULT_OK == resultCode) {
+            if (REQUEST_IMAGE_CAPTURE == requestCode) {
+                //save the attachment path for sending it in email later
+                attachments.add(currentPhoto);
 
-        //inflate the attachment preview layout and populate it with a thumbnail
-        View attachmentPreview = getLayoutInflater().inflate(R.layout.fragment_attachment_preview, null);
-        ImageView imageView = (ImageView) attachmentPreview.findViewById(R.id.imageView);
+                //inflate the attachment preview layout and populate it with a thumbnail
+                View attachmentPreview = getLayoutInflater().inflate(R.layout.fragment_attachment_preview, null);
+                ImageView imageView = (ImageView) attachmentPreview.findViewById(R.id.imageView);
 
-        // Get the dimensions of the View
-        int targetW = 80;
-        int targetH = 80;
+                // Get the dimensions of the View
+                int targetW = 80;
+                int targetH = 80;
 
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
+                // Get the dimensions of the bitmap
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
+                int photoW = bmOptions.outWidth;
+                int photoH = bmOptions.outHeight;
 
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+                // Determine how much to scale down the image
+                int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
+                // Decode the image file into a Bitmap sized to fill the View
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
 
-        Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
-        imageView.setImageBitmap(imageBitmap);
-        thumbnailLinearLayout.addView(attachmentPreview);
-
+                Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
+                imageView.setImageBitmap(imageBitmap);
+                thumbnailLinearLayout.addView(attachmentPreview);
+            } else if (REQUEST_TAKE_VIDEO == requestCode) {
+                Uri videoUri = data.getData();
+                attachments.add(new File(videoUri.getPath()));
+                Log.d(getClass().getSimpleName(), "added video attachment");
+            }
+        }
     }
 
 
@@ -205,15 +216,15 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         XMLGenerator xmlGenerator = new XMLGenerator();
-                        titleView = (TextView) findViewById(R.id.title);
-                        EditText bodyView = (EditText) findViewById(R.id.subjectEditText);
+                        EditText titleEditText = (EditText) findViewById(R.id.subjectEditText);
+                        EditText bodyEditText = (EditText) findViewById(R.id.infoEditText);
                         String country = getCountry();
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
                         try {
                             xmlForEmail = xmlGenerator.createXML("camera", "username",
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
-                                    titleView.getText().toString(), bodyView.getText().toString(),
+                                    titleEditText.getText().toString(), bodyEditText.getText().toString(),
                                     attachments);
                             Log.v("XML FILE", xmlForEmail);
                         } catch (IOException e) {
@@ -286,6 +297,13 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         // Save a file: path for use with ACTION_VIEW intents
         currentPhoto = image;
         return image;
+    }
+
+    private void dispatchTakeVideoIntent() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
+        }
     }
 
     private void sendEmail() {
