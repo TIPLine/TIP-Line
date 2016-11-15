@@ -1,5 +1,7 @@
 package io.github.tipline.android_app.util;
 
+import android.os.AsyncTask;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +14,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -64,7 +67,7 @@ public class GMailSender extends javax.mail.Authenticator {
 
     public synchronized void sendMail(String subject, String body,
                                       String sender, String recipients) throws Exception {
-        MimeMessage message = new MimeMessage(session);
+        final MimeMessage message = new MimeMessage(session);
         DataHandler handler = new DataHandler(new ByteArrayDataSource(
                 body.getBytes(), "text/plain"));
         message.setSender(new InternetAddress(sender));
@@ -84,7 +87,20 @@ public class GMailSender extends javax.mail.Authenticator {
         multipart.addBodyPart(messageBody);
         message.setContent(multipart);
 
-        Transport.send(message);
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(final Void ... params ) {
+                try {
+                    Transport.send(message);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+
+
+        }.execute();
+
     }
 
     public class ByteArrayDataSource implements DataSource {
