@@ -17,7 +17,7 @@
         android:paddingRight="16dp"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal|bottom"
-        android:background="@color/darkBlueTranslucent"
+        android:background="@color/aalightbluetranslucent"
         android:layout_marginTop="0dp">
 
         <TextView

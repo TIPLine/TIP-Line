@@ -3,12 +3,14 @@ package io.github.tipline.android_app.async;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -91,13 +94,10 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... params) {
         Log.d(this.getClass().getSimpleName(), "started GPSAsyncTask");
         long startWaitTime = System.currentTimeMillis();
+        waitFor(1000); //give user time to read toast
         // get the gps lock
         while (!gotGpsLock.get() && System.currentTimeMillis() - startWaitTime < TIMEOUT) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitFor(1000);
         }
         Log.d(this.getClass().getSimpleName(), "done waiting for gps lock");
         if (!gotGpsLock.get()) {
@@ -111,14 +111,46 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                     toast.show();
                 }
             });
-
+            waitFor(2000); //give user time to read toast
         }
         String phoneNum = null;
         // look for the appropriate phone number
         if (!gotGpsLock.get() || countryName.equals("unknown country")) {
             // if can't find country, use a default phone number
             try {
+                List<CharSequence> countryOptions = new ArrayList<>();
+                for (int i = 0; i < jsonNumbers.names().length(); i++) {
+                    countryOptions.add(jsonNumbers.names().getString(i));
+                    System.out.println("aded country" + jsonNumbers.names().getString(i));
+
+                }
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Could not geolocate - Choose a country");
+                builder.setItems(countryOptions.toArray(new CharSequence[countryOptions.size()]), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            String phoneNum = jsonNumbers.getString(jsonNumbers.names().getString(which));
+                            // call the chosen phone number
+                            Log.d(getClass().getSimpleName(), "starting to user-selected country (geolocation has failed)");
+                            call(phoneNum);
+                            callAttempted.set(true);
+                            Log.d(getClass().getSimpleName(), "set call attempted to true");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                ((Activity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        builder.show();
+                    }
+                });
                 phoneNum = (String) jsonNumbers.get(DEFAULT_COUNTRY);
+
+
             } catch (JSONException e) {
                 e.printStackTrace(); // if can't find default phone number, error out
             }
@@ -132,13 +164,23 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                     e.printStackTrace(); // if can't find default phone number, error out
                 }
             }
+
+            // call the chosen phone number
+            Log.d(getClass().getSimpleName(), "starting to call");
+            call(phoneNum);
+            callAttempted.set(true);
+            Log.d(getClass().getSimpleName(), "set call attempted to true");
         }
-        // call the chosen phone number
-        Log.d(getClass().getSimpleName(), "starting to call");
-        call(phoneNum);
-        callAttempted.set(true);
-        Log.d(getClass().getSimpleName(), "set call attempted to true");
+
         return true;
+    }
+
+    private void waitFor(long sleepTime) {
+        try {
+            Thread.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void call(String phoneNum) {

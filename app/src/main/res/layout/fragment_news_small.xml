@@ -23,7 +23,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="16dp"
             android:orientation="vertical"
-            android:background="@color/darkBlueTranslucent"
+            android:background="@color/aalightbluetranslucent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@color/lightBlueTranslucent"
+            android:background="@color/aalightbluetranslucent"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
             >
