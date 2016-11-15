@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -169,13 +170,15 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (RESULT_OK == resultCode) {
+            //inflate the attachment preview layout and populate it with a thumbnail
+            View attachmentPreview = getLayoutInflater().inflate(R.layout.fragment_attachment_preview, null);
+            ImageView imageView = (ImageView) attachmentPreview.findViewById(R.id.imageView);
+
             if (REQUEST_IMAGE_CAPTURE == requestCode) {
                 //save the attachment path for sending it in email later
                 attachments.add(currentPhoto);
 
-                //inflate the attachment preview layout and populate it with a thumbnail
-                View attachmentPreview = getLayoutInflater().inflate(R.layout.fragment_attachment_preview, null);
-                ImageView imageView = (ImageView) attachmentPreview.findViewById(R.id.imageView);
+
 
                 // Get the dimensions of the View
                 int targetW = 80;
@@ -198,12 +201,16 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
 
                 Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath(), bmOptions);
                 imageView.setImageBitmap(imageBitmap);
-                thumbnailLinearLayout.addView(attachmentPreview);
+
             } else if (REQUEST_TAKE_VIDEO == requestCode) {
                 Uri videoUri = data.getData();
                 attachments.add(new File(getPath(videoUri)));
                 Log.d(getClass().getSimpleName(), "added video attachment");
+                Bitmap videoBitmap = ThumbnailUtils.createVideoThumbnail(getPath(videoUri), MediaStore.Video.Thumbnails.MINI_KIND);
+                imageView.setImageBitmap(videoBitmap);
             }
+
+            thumbnailLinearLayout.addView(attachmentPreview);
         }
     }
 
