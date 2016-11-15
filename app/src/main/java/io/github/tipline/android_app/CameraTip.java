@@ -54,6 +54,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
     private String xmlForEmail;
     private EditText titleEditText;
 
+    private static final long MAX_VIDEO_SIZE_MB = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -323,6 +324,8 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
 
     private void dispatchTakeVideoIntent() {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        takeVideoIntent.putExtra("EXTRA_VIDEO_QUALITY", 0); //low video quality so that longer video can be attached to email
+        takeVideoIntent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, MAX_VIDEO_SIZE_MB * 1048 * 1048);// X*1048*1048=5MB
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
         }
