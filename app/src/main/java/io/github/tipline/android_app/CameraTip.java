@@ -80,6 +80,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         addAttachmentButton = (ImageButton) findViewById(R.id.add_attachment);
         addAttachmentButton.setOnClickListener(this);
 
+        TextView addAttachmentText = (TextView) findViewById(R.id.add_attachment_text);
+        addAttachmentText.setOnClickListener(this);
+
 
         thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnail_layout);
 
@@ -114,6 +117,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                 showCancellationDialog();
                 break;
             case R.id.add_attachment:
+                dispatchTakePictureIntent();
+                break;
+            case R.id.add_attachment_text:
                 dispatchTakePictureIntent();
                 break;
             default:

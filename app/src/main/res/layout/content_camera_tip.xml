@@ -94,6 +94,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/add_attachment_text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Add Attachment"
                     android:textColor="@color/aalightblue" />
