@@ -34,7 +34,8 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
-        <activity android:name=".MainPage">
+        <activity android:name=".MainPage"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,6 +46,7 @@
             android:name=".AudioTip"
             android:label="@string/title_activity_audio_tip"
             android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -58,6 +60,7 @@
         <activity
             android:name=".Settings"
             android:label="@string/action_settings"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,6 +69,7 @@
         <activity
             android:name=".TextTip"
             android:label="@string/text_tip"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -74,6 +78,7 @@
         </activity>
         <activity
             android:name=".TipCall"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_tip_call"
             android:theme="@style/AppTheme">
             <meta-data
@@ -82,6 +87,7 @@
         </activity>
         <activity android:name=".CameraTip"
             android:label="Camera Tip"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme">
             <meta-data
