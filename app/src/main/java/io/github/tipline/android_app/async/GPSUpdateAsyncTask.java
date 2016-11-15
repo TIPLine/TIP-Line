@@ -1,4 +1,4 @@
-package io.github.tipline.android_app;
+package io.github.tipline.android_app.async;
 
 import android.Manifest;
 import android.app.Activity;

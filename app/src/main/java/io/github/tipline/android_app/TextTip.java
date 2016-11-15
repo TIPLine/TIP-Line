@@ -1,28 +1,22 @@
 package io.github.tipline.android_app;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Xml;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
-import android.widget.Toast;
-
-import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
-import java.io.StringWriter;
+
+import io.github.tipline.android_app.util.GMailSender;
+import io.github.tipline.android_app.util.XMLGenerator;
 
 
 public class TextTip extends LocationGetterActivity implements View.OnClickListener {

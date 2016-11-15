@@ -1,4 +1,4 @@
-package io.github.tipline.android_app;
+package io.github.tipline.android_app.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

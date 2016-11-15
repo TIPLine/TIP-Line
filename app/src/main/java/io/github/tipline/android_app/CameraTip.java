@@ -26,14 +26,14 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import im.delight.android.location.SimpleLocation;
+import io.github.tipline.android_app.util.GMailSender;
+import io.github.tipline.android_app.util.XMLGenerator;
 
 public class CameraTip extends LocationGetterActivity implements View.OnClickListener {
 
@@ -206,6 +206,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
             }
         }
     }
+
     private String getPath(Uri uri)
     {
         String[] projection = { MediaStore.Images.Media.DATA };
