@@ -135,8 +135,8 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
             // call the chosen phone number
             Log.d(getClass().getSimpleName(), "starting to call");
-            call(phoneNum);
             callAttempted.set(true);
+            call(phoneNum);
             Log.d(getClass().getSimpleName(), "set call attempted to true");
         }
 
@@ -161,8 +161,8 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                         String phoneNum = jsonNumbers.getString(jsonNumbers.names().getString(which));
                         // call the chosen phone number
                         Log.d(getClass().getSimpleName(), "starting to user-selected country (geolocation has failed)");
-                        call(phoneNum);
                         callAttempted.set(true);
+                        call(phoneNum);
                         Log.d(getClass().getSimpleName(), "set call attempted to true");
                     } catch (JSONException e) {
                         e.printStackTrace();
