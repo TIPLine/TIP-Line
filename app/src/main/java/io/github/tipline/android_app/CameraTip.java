@@ -2,6 +2,7 @@ package io.github.tipline.android_app;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +26,8 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,8 +50,8 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
 
     private SimpleLocation locator; // get gps location with this
     private GMailSender sender;
-    private TextView titleView;
     private String xmlForEmail;
+    private EditText titleEditText;
 
 
     @Override
@@ -198,10 +201,21 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                 thumbnailLinearLayout.addView(attachmentPreview);
             } else if (REQUEST_TAKE_VIDEO == requestCode) {
                 Uri videoUri = data.getData();
-                attachments.add(new File(videoUri.getPath()));
+                attachments.add(new File(getPath(videoUri)));
                 Log.d(getClass().getSimpleName(), "added video attachment");
             }
         }
+    }
+    private String getPath(Uri uri)
+    {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s = cursor.getString(column_index);
+        cursor.close();
+        return s;
     }
 
 
@@ -216,7 +230,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         XMLGenerator xmlGenerator = new XMLGenerator();
-                        EditText titleEditText = (EditText) findViewById(R.id.subjectEditText);
+                        titleEditText = (EditText) findViewById(R.id.subjectEditText);
                         EditText bodyEditText = (EditText) findViewById(R.id.infoEditText);
                         String country = getCountry();
                         double locationLongitude = getLongitude();
@@ -316,9 +330,10 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         }
         try {
             // Add subject, Body, your mail Id, and receiver mail Id.
-            sender.sendMail(titleView.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
         }
         catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
