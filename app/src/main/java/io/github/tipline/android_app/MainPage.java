@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import io.github.tipline.android_app.async.PhoneNumbersUpdateAsyncTask;
 
@@ -122,7 +123,7 @@ public class MainPage extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News"};//, "Settings" };
+        String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News", "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         drawerList.setAdapter(adapter);
         drawerList.setDivider(null);
@@ -156,9 +157,9 @@ public class MainPage extends AppCompatActivity {
                         viewPager.setCurrentItem(1);
                         mDrawerLayout.closeDrawers();
                         break;
-//                    case 9:
-//                        startActivity(new Intent(MainPage.this, Settings.class));
-//                        break;
+                    case 9:
+                        startActivity(new Intent(MainPage.this, Settings.class));
+                        break;
                 }
             }
         });
