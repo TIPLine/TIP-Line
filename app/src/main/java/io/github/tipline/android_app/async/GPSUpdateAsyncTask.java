@@ -126,18 +126,14 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         if (!gotGpsLock.get() || countryName.equals("unknown country")) {
             // if can't find what country the user is in, ask user which country to call.
             userSelectCountryToCall();
-        } else { // if found country location
+        } else { // if found country location, look up the numbers for their location and present them with the options
             try {
-                phoneNum = (String) jsonNumbers.get(countryName); // look for the appropriate phone numb for this country
+                final JSONObject phoneOptionsJson = jsonNumbers.getJSONObject(countryName); //the json object with phone numbers for this country
+                createPhoneNumberChooserForCountry(phoneOptionsJson);
             } catch (JSONException e) {
                 userSelectCountryToCall();//if can't find the user's location country in the list of phone numbers, ask user to select country to call
             }
 
-            // call the chosen phone number
-            Log.d(getClass().getSimpleName(), "starting to call");
-            callAttempted.set(true);
-            call(phoneNum);
-            Log.d(getClass().getSimpleName(), "set call attempted to true");
         }
 
         return true;
@@ -158,12 +154,13 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {
-                        String phoneNum = jsonNumbers.getString(jsonNumbers.names().getString(which));
+                        final JSONObject phoneOptionsJson = jsonNumbers.getJSONObject(jsonNumbers.names().getString(which)); //the json object with phone numbers for this country
+
+
+                        createPhoneNumberChooserForCountry(phoneOptionsJson);
+
                         // call the chosen phone number
-                        Log.d(getClass().getSimpleName(), "starting to user-selected country (geolocation has failed)");
-                        callAttempted.set(true);
-                        call(phoneNum);
-                        Log.d(getClass().getSimpleName(), "set call attempted to true");
+                        Log.d(getClass().getSimpleName(), "starting to call user-selected country (geolocation has failed)");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -180,6 +177,41 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         } catch (JSONException e) {
             e.printStackTrace(); // if can't find default phone number, error out
         }
+    }
+
+    private void createPhoneNumberChooserForCountry(final JSONObject phoneOptionsJson) {
+        //create and populate a list of phone numbers for the chosen country
+        List<CharSequence> phoneOptions = new ArrayList<>();
+        for (int i = 0; i < phoneOptionsJson.names().length(); i++) {
+            try {
+                phoneOptions.add(phoneOptionsJson.names().getString(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choose a phone number");
+        builder.setItems(phoneOptions.toArray(new CharSequence[phoneOptions.size()]), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    String phoneNum = phoneOptionsJson.getString(phoneOptionsJson.names().getString(which));
+                    callAttempted.set(true);
+                    call(phoneNum);
+                    Log.d(getClass().getSimpleName(), "set call attempted to true");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                builder.show();
+            }
+        });
     }
 
     private void waitFor(long sleepTime) {

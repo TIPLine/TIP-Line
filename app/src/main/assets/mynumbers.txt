@@ -1,4 +1,10 @@
 {
-  "United States": "18663472423",
-  "Colombia": "18000522020"
+	"United States": {
+		"DHS TIP Line": "18663472423",
+		"NHTRC TIP Line": "18883737888",
+		"Emergency (911)": "911"
+	},
+	"Colombia": {
+		"Colombia Tip Line": "18000522200"
+	}
 }
