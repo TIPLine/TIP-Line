@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import io.github.tipline.android_app.async.GPSUpdateAsyncTask;
 
 public class TipCall extends LocationGetterActivity  {
-    private static String locationCountry = "United States";
     private JSONObject jsonNumbers;
     private ProgressBar progressBar;
     private final int PHONE_PERMISSION_CODE = 876;
@@ -144,50 +143,6 @@ public class TipCall extends LocationGetterActivity  {
 
             default:
                 break;
-        }
-    }
-
-    //monitor phone call activities
-    private class PhoneCallListener extends PhoneStateListener {
-
-        private boolean isPhoneCalling = false;
-
-        String LOG_TAG = "LOGGING 123";
-
-        @Override
-        public void onCallStateChanged(int state, String incomingNumber) {
-
-            if (TelephonyManager.CALL_STATE_RINGING == state) {
-                // phone ringing
-                Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
-            }
-
-            if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
-                // active
-                Log.i(LOG_TAG, "OFFHOOK");
-                isPhoneCalling = true;
-            }
-
-            if (TelephonyManager.CALL_STATE_IDLE == state) {
-                // run when class initial and phone call ended,
-                // need detect flag from CALL_STATE_OFFHOOK
-                Log.i(LOG_TAG, "IDLE");
-
-                if (isPhoneCalling) {
-
-                    Log.i(LOG_TAG, "restart app");
-
-                    // restart app
-                    Intent i = TipCall.this.getBaseContext().getPackageManager()
-                            .getLaunchIntentForPackage(
-                                    TipCall.this.getBaseContext().getPackageName());
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-
-                    isPhoneCalling = false;
-                }
-
-            }
         }
     }
 }
