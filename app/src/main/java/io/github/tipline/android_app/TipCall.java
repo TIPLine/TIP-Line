@@ -11,6 +11,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -38,6 +39,8 @@ public class TipCall extends LocationGetterActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip_call);
         callAttempted = new AtomicBoolean(false);
+
+        Switch switchButton = (Switch) findViewById(R.id.switch1);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -162,7 +165,6 @@ public class TipCall extends LocationGetterActivity  {
             if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
                 // active
                 Log.i(LOG_TAG, "OFFHOOK");
-
                 isPhoneCalling = true;
             }
 
