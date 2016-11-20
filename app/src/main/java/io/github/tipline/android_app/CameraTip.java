@@ -33,10 +33,13 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import im.delight.android.location.SimpleLocation;
 
@@ -194,7 +197,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
                         try {
-                            String xmlForEmail = xmlGenerator.createXML("camera", "username",
+                            String xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime(),
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
                                     titleView.getText().toString(), bodyView.getText().toString(),
                                     attachments);
@@ -268,5 +271,11 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         // Save a file: path for use with ACTION_VIEW intents
         currentPhoto = image;
         return image;
+    }
+
+    private String getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        return dateFormat.format(calendar.getTime());
     }
 }

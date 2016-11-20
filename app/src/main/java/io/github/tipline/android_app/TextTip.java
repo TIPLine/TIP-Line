@@ -19,10 +19,15 @@ import android.widget.EditText;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.util.Locale;
 
 
 public class TextTip extends LocationGetterActivity implements View.OnClickListener {
@@ -99,7 +104,8 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
                     String locationCountry = getCountry();
                     double locationLongitude = getLongitude();
                     double locationLatitude = getLatitude();
-                    xml = xmlGenerator.createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
+                    xml = xmlGenerator.createXML(type, name, getCurrentTime(),
+                            locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body);
                     Log.v("XML FILE", xml);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -184,5 +190,11 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         }
         catch (Exception ex) {
         }
+    }
+
+    private String getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        return dateFormat.format(calendar.getTime());
     }
 }
