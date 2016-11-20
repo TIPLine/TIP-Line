@@ -248,11 +248,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
                         try {
-<<<<<<< HEAD
-                            String xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime(),
-=======
-                            xmlForEmail = xmlGenerator.createXML("camera", "username",
->>>>>>> 4e90691027ce7eb6f08992139a89b2fb4e613a1a
+                            //String xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime()
+
+                            xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime(),
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
                                     titleEditText.getText().toString(), bodyEditText.getText().toString(),
                                     attachments);
@@ -329,12 +327,12 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         return image;
     }
 
-<<<<<<< HEAD
     private String getCurrentTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
         Calendar calendar = Calendar.getInstance();
         return dateFormat.format(calendar.getTime());
-=======
+    }
+    
     private void dispatchTakeVideoIntent() {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         takeVideoIntent.putExtra("EXTRA_VIDEO_QUALITY", 0); //low video quality so that longer video can be attached to email
@@ -359,6 +357,6 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         catch (Exception ex) {
             ex.printStackTrace();
         }
->>>>>>> 4e90691027ce7eb6f08992139a89b2fb4e613a1a
+
     }
 }
