@@ -1,5 +1,10 @@
 {
-  "United States": "19198675309",
-  "Guatemala": "5021111111111",
-  "France": "331234567891"
+	"United States": {
+		"DHS TIP Line": "18663472423",
+		"NHTRC TIP Line": "18883737888",
+		"Emergency (911)": "911"
+	},
+	"Colombia": {
+		"Colombia Tip Line": "18000522200"
+	}
 }

@@ -1,4 +1,4 @@
-package io.github.tipline.android_app;
+package io.github.tipline.android_app.util;
 
 /**
  * from http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java#260314

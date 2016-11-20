@@ -1,4 +1,4 @@
-package io.github.tipline.android_app;
+package io.github.tipline.android_app.async;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import io.github.tipline.android_app.R;
 
 
 /**
