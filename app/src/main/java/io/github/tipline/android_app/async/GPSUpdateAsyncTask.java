@@ -77,6 +77,18 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         Log.d(this.getClass().getSimpleName(), "started GPSAsyncTask");
+        final CharSequence text0 = "Obtaining GPS Lock";
+        final int duration0 = Toast.LENGTH_LONG;
+
+
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(context, text0, duration0);
+                toast.show();
+            }
+        });
+
         long startWaitTime = System.currentTimeMillis();
         waitFor(1000); //give user time to read toast
         // get the gps lock

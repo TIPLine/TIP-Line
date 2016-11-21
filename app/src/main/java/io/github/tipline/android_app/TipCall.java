@@ -56,14 +56,6 @@ public class TipCall extends LocationGetterActivity  {
             gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted);
             gpsCallAsyncTask.execute();
         }
-
-
-        final CharSequence text = "Obtaining GPS Lock";
-        final int duration = Toast.LENGTH_LONG;
-
-
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
     }
 
     @Override
@@ -154,7 +146,8 @@ public class TipCall extends LocationGetterActivity  {
                     gpsCallAsyncTask.execute();
 
                 } else {
-                    Log.d("TAG", "Call Permission Not Granted");
+                    Log.d("TAG", "Call Permission Not Granted -- returning to Main page");
+                    startActivity(new Intent(TipCall.this, MainPage.class));
                 }
                 break;
 
