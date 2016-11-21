@@ -24,63 +24,6 @@
             android:layout_width="match_parent"
             android:orientation = "vertical"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Tip Subject"
-                android:id="@+id/title"
-                android:layout_marginTop="50dp"
-                android:textColor="@color/aadarkblue" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/subjectEditText"
-                android:textColor="?attr/colorControlNormal" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Tip Information"
-                android:id="@+id/textView3"
-                android:layout_marginTop="36dp"
-                android:textColor="@color/aadarkblue" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/infoEditText"
-                android:textColor="?attr/colorControlNormal" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Attachments"
-                android:id="@+id/attachments"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/aadarkblue" />
-
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="85dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/thumbnail_layout">
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,6 +68,59 @@
                     android:textSize="25dp"
                     android:textColor="@color/aalightblue" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Tip Subject"
+                android:id="@+id/title"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/aadarkblue" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/subjectEditText"
+                android:hint="@string/tip_subject"
+                android:textColor="?attr/colorControlNormal" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Tip Information"
+                android:id="@+id/textView3"
+                android:layout_marginTop="36dp"
+                android:textColor="@color/aadarkblue" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="@string/tip_message"
+                android:ems="10"
+                android:id="@+id/infoEditText"
+                android:textColor="?attr/colorControlNormal" />
+
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="85dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/thumbnail_layout">
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+
         </LinearLayout>
     </ScrollView>
 
