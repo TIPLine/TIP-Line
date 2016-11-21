@@ -36,7 +36,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     private SimpleLocation locator;
     private String countryName;
     private Context context;
-    AtomicBoolean gotGpsLock;
+    private AtomicBoolean gotGpsLock;
     private static final long TIMEOUT = 15000; //15 second timeout for gps lock, after which the default country/number will be used.
 
     public GPSUpdateAsyncTask(final Context context, JSONObject jsonNumbers, AtomicBoolean callAttempted) {
@@ -44,6 +44,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         this.jsonNumbers = jsonNumbers;
         this.callAttempted = callAttempted;
     }
+
 
     @Override
     public void onPreExecute() {
@@ -82,6 +83,10 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         while (!gotGpsLock.get() && System.currentTimeMillis() - startWaitTime < TIMEOUT) {
             waitFor(1000);
         }
+        if (isCancelled()) {
+            return false;
+        }
+
         Log.d(this.getClass().getSimpleName(), "done waiting for gps lock");
         if (!gotGpsLock.get()) {
             final CharSequence text = "Couldn't attain GPS lock";

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -32,6 +30,7 @@ public class TipCall extends LocationGetterActivity  {
     private ProgressBar progressBar;
     private final int PHONE_PERMISSION_CODE = 876;
     private AtomicBoolean callAttempted;
+    private GPSUpdateAsyncTask gpsCallAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,8 @@ public class TipCall extends LocationGetterActivity  {
                     this, new String[]{Manifest.permission.CALL_PHONE}, PHONE_PERMISSION_CODE);
         } else { //permission was already granted
             Log.d(getClass().getSimpleName(), "permission was already granted");
-            new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted).execute();
+            gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted);
+            gpsCallAsyncTask.execute();
         }
 
 
@@ -72,6 +72,22 @@ public class TipCall extends LocationGetterActivity  {
         Log.d(getClass().getSimpleName(), "resumed");
         if (callAttempted.get()) {
             startActivity(new Intent(TipCall.this, MainPage.class));
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (gpsCallAsyncTask != null) {
+            gpsCallAsyncTask.cancel(true);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onStop();
+        if (gpsCallAsyncTask != null) {
+            gpsCallAsyncTask.cancel(true);
         }
     }
 
@@ -134,7 +150,8 @@ public class TipCall extends LocationGetterActivity  {
 
             case PHONE_PERMISSION_CODE:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted).execute();
+                    gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted);
+                    gpsCallAsyncTask.execute();
 
                 } else {
                     Log.d("TAG", "Call Permission Not Granted");
