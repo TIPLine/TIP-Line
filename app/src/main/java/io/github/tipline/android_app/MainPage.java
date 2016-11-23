@@ -23,19 +23,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.tipline.android_app.async.PhoneNumbersUpdateAsyncTask;
 
 public class MainPage extends AppCompatActivity {
 
+    private static final int PERMISSION_ALL = 3333;
     private ListView drawerList;
     private ArrayAdapter<String> adapter;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private ViewPager viewPager;
-    private int MY_PERMISSIONS_REQUEST_RECORD_AUDIO;
-    private int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
-    private static final int TAG_CODE_PERMISSION_LOCATION = 3333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,39 +88,11 @@ public class MainPage extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.RECORD_AUDIO)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.RECORD_AUDIO},
-                        MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
-            }
-        }
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-            }
-        }
+        final String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.RECORD_AUDIO};
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED) {
-        } else {
-            ActivityCompat.requestPermissions(this, new String[] {
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION },
-                    TAG_CODE_PERMISSION_LOCATION);
-        }
+        ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
     }
 
     private void addDrawerItems() {

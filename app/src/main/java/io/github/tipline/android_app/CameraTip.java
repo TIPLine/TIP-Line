@@ -27,10 +27,13 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import im.delight.android.location.SimpleLocation;
 import io.github.tipline.android_app.util.GMailSender;
@@ -245,7 +248,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
                         try {
-                            xmlForEmail = xmlGenerator.createXML("camera", "username",
+                            //String xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime()
+
+                            xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime(),
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
                                     titleEditText.getText().toString(), bodyEditText.getText().toString(),
                                     attachments);
@@ -322,6 +327,12 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         return image;
     }
 
+    private String getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        return dateFormat.format(calendar.getTime());
+    }
+    
     private void dispatchTakeVideoIntent() {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         takeVideoIntent.putExtra("EXTRA_VIDEO_QUALITY", 0); //low video quality so that longer video can be attached to email
@@ -346,5 +357,6 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 }

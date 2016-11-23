@@ -16,7 +16,7 @@ public class XMLGenerator {
     //Or make a class with the XML tags?
     //Fill in the appropriate information
 
-    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+    public String createXML(String type, String name, String time, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
                             title, String body, List<File> attachments) throws IOException {
 
         XmlSerializer serializer = Xml.newSerializer();
@@ -36,6 +36,12 @@ public class XMLGenerator {
         serializer.endTag("", "name");
         //</name>
 
+        //<time>
+        serializer.startTag("", "time");
+        serializer.text(time);
+        serializer.endTag("", "time");
+        //</time>
+
         //<locationCountry>
         serializer.startTag("", "locationCountry");
         serializer.text(locationCountry);
@@ -52,6 +58,7 @@ public class XMLGenerator {
         serializer.startTag("", "locationLatitude");
         serializer.text(Double.toString(locationLatitude));
         serializer.endTag("", "locationLatitude");
+
         //</locationLatitude>
         //<phone_number>
         serializer.startTag("", "phone_number");
@@ -86,18 +93,18 @@ public class XMLGenerator {
         serializer.endDocument();
         return XmlUtils.formatXml(writer.toString());
     }
-    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+    public String createXML(String type, String name, String time, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
             title, String body, File file) throws IOException {
         List<File> attachments = new ArrayList<>();
         attachments.add(file);
-        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
+        return createXML(type, name, time, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
     }
 
-    public String createXML(String type, String name, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
+    public String createXML(String type, String name, String time, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
             title, String body) throws IOException {
         List<File> attachments = new ArrayList<>(); //empty attachments list
 
-        return createXML(type, name, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
+        return createXML(type, name, time, locationCountry, locationLongitude, locationLatitude, phoneNumber, title, body, attachments);
     }
 
 

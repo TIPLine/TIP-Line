@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,98 +10,124 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="io.github.tipline.android_app.TextTip"
-    tools:showIn="@layout/activity_text_tip">
+    tools:showIn="@layout/activity_text_tip"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Tip Subject"
-        android:id="@+id/textView2"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/aadarkblue" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Tip Information"
-        android:id="@+id/textView3"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/editSubject"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/aadarkblue" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/tip_subject"
-        android:ems="10"
-        android:imeOptions="actionNone"
-        android:id="@+id/editSubject"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="?attr/colorControlNormal" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/tip_message"
-        android:ems="10"
-        android:imeOptions="actionNone"
-        android:id="@+id/editMessage"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp"
-        android:layout_alignRight="@+id/editSubject"
-        android:layout_alignEnd="@+id/editSubject"
-        android:textColor="@color/aadarkblue" />
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="400dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="130dp"
-            android:layout_height="80dp"
-            android:text="Cancel"
-            android:id="@+id/textCancel"
-            android:textSize="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/textView"
-            android:layout_alignStart="@+id/textView"
-            android:layout_weight="1"
-            android:textColor="@android:color/background_light"
-            android:textStyle="normal|bold"
-            android:background="@color/colorAccent"
-            android:layout_marginRight="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-        <Button
-            android:layout_width="130dp"
-            android:layout_height="80dp"
-            android:text="Submit"
-            android:id="@+id/textSubmit"
-            android:layout_marginEnd="0dp"
-            android:layout_alignTop="@+id/textCancel"
-            android:layout_alignRight="@+id/editMessage"
-            android:layout_alignEnd="@+id/editMessage"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            android:textColor="@android:color/background_light"
-            android:textStyle="normal|bold"
-            android:background="@color/aalightblue" />
-    </LinearLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tip Subject"
+                    android:id="@+id/textView2"
+                    android:layout_marginTop="50dp"
+                    android:layout_below="@+id/textView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/aadarkblue" />
 
-</RelativeLayout>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/tip_subject"
+                    android:ems="10"
+                    android:imeOptions="actionNone"
+                    android:id="@+id/editSubject"
+                    android:layout_below="@+id/textView2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?attr/colorControlNormal" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tip Information"
+                    android:id="@+id/textView3"
+                    android:layout_marginTop="36dp"
+                    android:layout_below="@+id/editSubject"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/aadarkblue" />
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/tip_message"
+                    android:ems="10"
+                    android:imeOptions="actionNone"
+                    android:id="@+id/editMessage"
+                    android:layout_below="@+id/textView3"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/editSubject"
+                    android:layout_alignEnd="@+id/editSubject"
+                    android:textColor="@color/aadarkblue" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" />
+            </HorizontalScrollView>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="150dp">
+
+                    <Button
+                        android:layout_width="130dp"
+                        android:layout_height="80dp"
+                        android:text="Cancel"
+                        android:id="@+id/textCancel"
+                        android:textSize="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignLeft="@+id/textView"
+                        android:layout_alignStart="@+id/textView"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="normal|bold"
+                        android:background="@color/colorAccent"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp" />
+
+                    <Button
+                        android:layout_width="130dp"
+                        android:layout_height="80dp"
+                        android:text="Submit"
+                        android:id="@+id/textSubmit"
+                        android:layout_marginEnd="0dp"
+                        android:layout_alignTop="@+id/textCancel"
+                        android:layout_alignRight="@+id/editMessage"
+                        android:layout_alignEnd="@+id/editMessage"
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="normal|bold"
+                        android:background="@color/aalightblue"
+                        android:layout_marginLeft="10dp" />
+
+                </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
