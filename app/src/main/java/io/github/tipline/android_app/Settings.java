@@ -12,11 +12,12 @@ import android.util.Log;
 
 public class Settings extends AppCompatActivity {
 
+    final Boolean[] testState = new Boolean[1];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Switch switchButton;
-        final Boolean[] testState = new Boolean[1];
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -43,5 +44,9 @@ public class Settings extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public Boolean getTestState() {
+        return testState[0];
     }
 }

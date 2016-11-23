@@ -50,7 +50,7 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location Services"
+            android:text="Test Mode"
             android:id="@+id/switch1"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
