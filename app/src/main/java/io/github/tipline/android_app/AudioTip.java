@@ -12,6 +12,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -22,13 +23,22 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.app.Activity;
 import android.os.Environment;
 import java.io.IOException;
 import java.io.File;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
+import io.github.tipline.android_app.util.GMailSender;
+import io.github.tipline.android_app.util.XMLGenerator;
 
 public class AudioTip extends LocationGetterActivity implements View.OnClickListener, MediaStore.Audio.AudioColumns {
 
@@ -43,6 +53,10 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
     boolean startRecording = false;
     private File newFile;
 
+    private GMailSender sender;
+    private String xmlForEmail;
+    private EditText titleEditText;
+    private List<File> attachments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +67,8 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
 
         //Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        attachments = new ArrayList<>();
 
         //initialize buttons
         submitButton = (Button) findViewById(R.id.audioSubmit);
@@ -118,6 +134,11 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
             }
         });
 
+        // Setting up email info
+        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
+                Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     //Controls back button
@@ -145,6 +166,24 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         helpBuilder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        XMLGenerator xmlGenerator = new XMLGenerator();
+                        titleEditText = (EditText) findViewById(R.id.audio_subject);
+                        EditText bodyEditText = (EditText) findViewById(R.id.audio_body);
+                        String country = getCountry();
+                        double locationLongitude = getLongitude();
+                        double locationLatitude = getLatitude();
+                        try {
+                            //String xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime()
+
+                            xmlForEmail = xmlGenerator.createXML("audio", "username", getCurrentTime(),
+                                    country, locationLongitude, locationLatitude, "placeholder phone number",
+                                    titleEditText.getText().toString(), bodyEditText.getText().toString(),
+                                    attachments);
+                            Log.v("XML FILE", xmlForEmail);
+                        } catch (IOException e) {
+                            Log.e(CameraTip.class.getSimpleName(), "Issue creating XML");
+                        }
+                        sendEmail();
                         showTipSentDialog();
                     }
                 });
@@ -227,6 +266,8 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
 
             audioRecorder.setOutputFile(newFile.getPath());
             audioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+            attachments.add(newFile);
         }
         if(!startRecording) {
             try {
@@ -255,5 +296,26 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         } catch(RuntimeException stopException) {
             stopException.printStackTrace();
         }
+    }
+
+    private String getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        return dateFormat.format(calendar.getTime());
+    }
+
+    private void sendEmail() {
+        try {
+            sender.addAttachment(newFile.getPath());
+        } catch (Exception e) {
+        }
+        try {
+            // Add subject, Body, your mail Id, and receiver mail Id.
+            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
