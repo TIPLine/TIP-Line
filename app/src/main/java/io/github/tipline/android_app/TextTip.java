@@ -72,7 +72,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         phoneNumber = "555-1234";
 
         // Setting up email info
-        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign");
+        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign", this);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
                 Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
