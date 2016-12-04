@@ -33,16 +33,28 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     private static final String DEFAULT_COUNTRY = "United States"; // the app will use the phone number for United States if no other is available.
     private final JSONObject jsonNumbers;
     private final AtomicBoolean callAttempted; //notify the tipcall activity that a call was attempted so it knows to go back to main page
+    private final boolean inTestMode;
     private SimpleLocation locator;
     private String countryName;
     private Context context;
     private AtomicBoolean gotGpsLock;
     private static final long TIMEOUT = 15000; //15 second timeout for gps lock, after which the default country/number will be used.
+    private JSONObject testCallJson;
 
-    public GPSUpdateAsyncTask(final Context context, JSONObject jsonNumbers, AtomicBoolean callAttempted) {
+
+    public GPSUpdateAsyncTask(final Context context, JSONObject jsonNumbers, AtomicBoolean callAttempted, boolean inTestMode) {
         this.context = context;
         this.jsonNumbers = jsonNumbers;
         this.callAttempted = callAttempted;
+        this.inTestMode = inTestMode;
+
+
+        try {
+            testCallJson = jsonNumbers.getJSONObject("Test Number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        jsonNumbers.remove("Test Number");
     }
 
 
@@ -145,7 +157,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
             userSelectCountryToCall();
         } else { // if found country location, look up the numbers for their location and present them with the options
             try {
-                final JSONObject phoneOptionsJson = jsonNumbers.getJSONObject(countryName); //the json object with phone numbers for this country
+                final JSONObject phoneOptionsJson = inTestMode ? testCallJson : jsonNumbers.getJSONObject(countryName); //the json object with phone numbers for this country
                 createPhoneNumberChooserForCountry(phoneOptionsJson);
             } catch (JSONException e) {
                 userSelectCountryToCall();//if can't find the user's location country in the list of phone numbers, ask user to select country to call
@@ -157,6 +169,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void userSelectCountryToCall() {
+
         try {
             List<CharSequence> countryOptions = new ArrayList<>();
             for (int i = 0; i < jsonNumbers.names().length(); i++) {
@@ -171,7 +184,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {
-                        final JSONObject phoneOptionsJson = jsonNumbers.getJSONObject(jsonNumbers.names().getString(which)); //the json object with phone numbers for this country
+                        JSONObject phoneOptionsJson = inTestMode ? testCallJson : jsonNumbers.getJSONObject(jsonNumbers.names().getString(which)); //the json object with phone numbers for this country
 
 
                         createPhoneNumberChooserForCountry(phoneOptionsJson);
@@ -197,7 +210,8 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void createPhoneNumberChooserForCountry(final JSONObject phoneOptionsJson) {
-        //create and populate a list of phone numbers for the chosen country
+
+            //create and populate a list of phone numbers for the chosen country
         List<CharSequence> phoneOptions = new ArrayList<>();
         for (int i = 0; i < phoneOptionsJson.names().length(); i++) {
             try {
@@ -209,6 +223,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Choose a phone number");
+
         builder.setItems(phoneOptions.toArray(new CharSequence[phoneOptions.size()]), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

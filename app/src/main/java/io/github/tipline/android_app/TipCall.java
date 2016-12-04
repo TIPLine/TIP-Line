@@ -2,6 +2,7 @@ package io.github.tipline.android_app;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,20 +32,24 @@ public class TipCall extends LocationGetterActivity  {
     private final int PHONE_PERMISSION_CODE = 876;
     private AtomicBoolean callAttempted;
     private GPSUpdateAsyncTask gpsCallAsyncTask;
+    private boolean inTestMode;
+    private String PREFS_NAME = "preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        inTestMode = settings.getBoolean("testMode", false);
+        Log.d("test mode status", Boolean.toString(inTestMode));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip_call);
         callAttempted = new AtomicBoolean(false);
 
-        Switch switchButton = (Switch) findViewById(R.id.switch1);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         jsonNumbers = getPhoneNumbers();
+
 
         int permissionCheck = ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.CALL_PHONE);
 
@@ -53,7 +58,7 @@ public class TipCall extends LocationGetterActivity  {
                     this, new String[]{Manifest.permission.CALL_PHONE}, PHONE_PERMISSION_CODE);
         } else { //permission was already granted
             Log.d(getClass().getSimpleName(), "permission was already granted");
-            gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted);
+            gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted, inTestMode);
             gpsCallAsyncTask.execute();
         }
     }
@@ -142,7 +147,7 @@ public class TipCall extends LocationGetterActivity  {
 
             case PHONE_PERMISSION_CODE:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted);
+                    gpsCallAsyncTask = new GPSUpdateAsyncTask(this, jsonNumbers, callAttempted, inTestMode);
                     gpsCallAsyncTask.execute();
 
                 } else {
