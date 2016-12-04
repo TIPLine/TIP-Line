@@ -1,3 +1,13 @@
+# Tip Line Android App
+## Release Notes
+## Install Guide
+
+
+
+
+
+
+
 ## How to Import
 git clone https://github.com/TIPLine/TIP-Line
 
