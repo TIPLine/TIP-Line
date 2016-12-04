@@ -135,7 +135,7 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         });
 
         // Setting up email info
-        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign");
+        sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign", this);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
                 Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

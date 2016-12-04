@@ -1,5 +1,8 @@
 package io.github.tipline.android_app.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -26,6 +29,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class GMailSender extends javax.mail.Authenticator {
+    private final Context context;
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
@@ -37,9 +41,10 @@ public class GMailSender extends javax.mail.Authenticator {
         Security.addProvider(new JSSEProvider());
     }
 
-    public GMailSender(final String user, final String password) {
+    public GMailSender(final String user, final String password, Context context) {
         this.user = user;
         this.password = password;
+        this.context = context;
 
         Properties props = new Properties();
         multipart = new MimeMultipart();
@@ -91,6 +96,11 @@ public class GMailSender extends javax.mail.Authenticator {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(final Void ... params ) {
+
+                while (!isConnected(context)) { //wait for network connectivity before sending
+
+                }
+
                 try {
                     Transport.send(message);
                     Log.d(getClass().getSimpleName(), "finished sending email");
@@ -150,5 +160,23 @@ public class GMailSender extends javax.mail.Authenticator {
         messageBodyPart.setDataHandler(new DataHandler(source));
         messageBodyPart.setFileName(filename);
         multipart.addBodyPart(messageBodyPart);
+    }
+
+    /**
+     * check if connected to a network
+     *
+     * http://stackoverflow.com/questions/8678362/wait-until-wifi-connected-on-android
+     * @param context
+     * @return whether connected or not
+     */
+    public static boolean isConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+
+        return networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED;
     }
 }
