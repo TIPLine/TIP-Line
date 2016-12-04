@@ -52,7 +52,7 @@
                         android:layout_marginTop="0dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/aalightblue"
+                        android:background="@drawable/gradient"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                     <Button
@@ -64,7 +64,7 @@
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/aalightblue"
+                        android:background="@drawable/gradient"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                     <Button
@@ -76,7 +76,7 @@
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/aalightblue"
+                        android:background="@drawable/gradient"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                     <Button
@@ -88,7 +88,7 @@
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/tab_layout"
                         android:textStyle="bold"
-                        android:background="@color/aalightblue"
+                        android:background="@drawable/gradient"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true" />
                 </LinearLayout>
