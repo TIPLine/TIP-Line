@@ -1,31 +1,21 @@
 package io.github.tipline.android_app;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.app.Activity;
 import android.os.Environment;
 import java.io.IOException;
 import java.io.File;
@@ -50,7 +40,7 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
     private MediaPlayer mediaPlayer = null;
     //private String outputFile = null;
     private Uri saved;
-    boolean startRecording = false;
+    private boolean startRecording = false;
     private File newFile;
 
     private GMailSender sender;
@@ -74,8 +64,8 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         submitButton = (Button) findViewById(R.id.audioSubmit);
         cancelButton = (Button) findViewById(R.id.audioCancel);
         record = (Button) findViewById(R.id.record);
-        play = (Button) findViewById(R.id.play_audio);
-        stop = (Button) findViewById(R.id.stop_audio);
+        play = (Button) findViewById(R.id.playAudio);
+        stop = (Button) findViewById(R.id.stopAudio);
 
         //set play and stop to disabled
         stop.setEnabled(false);
@@ -167,8 +157,8 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         XMLGenerator xmlGenerator = new XMLGenerator();
-                        titleEditText = (EditText) findViewById(R.id.audio_subject);
-                        EditText bodyEditText = (EditText) findViewById(R.id.audio_body);
+                        titleEditText = (EditText) findViewById(R.id.audioSubject);
+                        EditText bodyEditText = (EditText) findViewById(R.id.audioBody);
                         String country = getCountry();
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
@@ -311,7 +301,7 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         }
         try {
             // Add subject, Body, your mail Id, and receiver mail Id.
-            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tip@airlineamb.org");
         }
         catch (Exception ex) {
             ex.printStackTrace();
