@@ -12,9 +12,9 @@ import java.util.List;
 
 
 public class XMLGenerator {
-    //Maybe make a TIP (super) Class it can take in?
-    //Or make a class with the XML tags?
-    //Fill in the appropriate information
+    /*
+    creates the xml file for email to clients
+     */
 
     public String createXML(String type, String name, String time, String locationCountry, double locationLongitude, double locationLatitude, String phoneNumber, String
                             title, String body, List<File> attachments) throws IOException {
@@ -58,8 +58,8 @@ public class XMLGenerator {
         serializer.startTag("", "locationLatitude");
         serializer.text(Double.toString(locationLatitude));
         serializer.endTag("", "locationLatitude");
-
         //</locationLatitude>
+
         //<phone_number>
         serializer.startTag("", "phone_number");
         serializer.text(phoneNumber);

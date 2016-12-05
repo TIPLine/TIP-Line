@@ -4,6 +4,9 @@ package io.github.tipline.android_app;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+/*
+layout and organization for news and tip tabs at top of page
+ */
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int numTabs;

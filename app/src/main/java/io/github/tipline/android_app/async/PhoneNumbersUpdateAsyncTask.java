@@ -23,6 +23,10 @@ import io.github.tipline.android_app.R;
 /**
  * Created by elimonent on 11/6/16.
  */
+
+/*
+takes airline ambassadors hidden page and abstracts phone numbers
+ */
 public class PhoneNumbersUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     private Context context;
     public PhoneNumbersUpdateAsyncTask(Context context) {

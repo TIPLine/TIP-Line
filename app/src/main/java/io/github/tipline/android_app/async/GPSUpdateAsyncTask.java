@@ -42,6 +42,12 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     private JSONObject testCallJson;
 
 
+
+    /*
+    this is the constructor for the GPS location
+    feature. This allows users to simply click a button and have the application determine their location
+    and the relevant phone numbers
+     */
     public GPSUpdateAsyncTask(final Context context, JSONObject jsonNumbers, AtomicBoolean callAttempted, boolean inTestMode) {
         this.context = context;
         this.jsonNumbers = jsonNumbers;
@@ -59,6 +65,9 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
 
     @Override
+    /*
+    this is where the GPS sets up location data before execution.
+     */
     public void onPreExecute() {
         locator = new SimpleLocation(context, false, false, 500);
         gotGpsLock = new AtomicBoolean(false);
@@ -73,11 +82,13 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
                 gotGpsLock.set(true);
             }
         });
+        //if location is not enabled open it
         if (!locator.hasLocationEnabled()) {
             // ask the user to enable location access
             Log.d(getClass().getSimpleName(), "opening settings for GPS");
             SimpleLocation.openSettings(context);
         }
+        // if GPS is enabled begin GPS updates
         if (locator.hasLocationEnabled()) {
             locator.beginUpdates();
             Log.d(getClass().getSimpleName(), "location updates begun");
@@ -87,6 +98,10 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
+    /*
+    Gps works that is going on in background while
+    the application is running
+     */
     protected Boolean doInBackground(Void... params) {
         Log.d(this.getClass().getSimpleName(), "started GPSAsyncTask");
         final CharSequence text0 = "Obtaining GPS Lock";
@@ -112,6 +127,7 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         Log.d(this.getClass().getSimpleName(), "done waiting for gps lock");
+        // if unable to obtain lock, execute this block
         if (!gotGpsLock.get()) {
             final CharSequence text = "Couldn't attain GPS lock";
             final int duration = Toast.LENGTH_LONG;
@@ -167,14 +183,17 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
         return true;
     }
-
+    /*
+    if GPS cannot get a lockon, ask user to select their country
+    and use this data to populate a phone number
+     */
     private void userSelectCountryToCall() {
 
         try {
             List<CharSequence> countryOptions = new ArrayList<>();
             for (int i = 0; i < jsonNumbers.names().length(); i++) {
                 countryOptions.add(jsonNumbers.names().getString(i));
-                System.out.println("aded country" + jsonNumbers.names().getString(i));
+                System.out.println("added country" + jsonNumbers.names().getString(i));
 
             }
 
@@ -208,7 +227,10 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
             e.printStackTrace(); // if can't find default phone number, error out
         }
     }
-
+    /*
+    this create a menu for user to select from a list
+    of phone numbers that are provided for each country
+     */
     private void createPhoneNumberChooserForCountry(final JSONObject phoneOptionsJson) {
 
             //create and populate a list of phone numbers for the chosen country
@@ -253,7 +275,9 @@ public class GPSUpdateAsyncTask extends AsyncTask<Void, Void, Boolean> {
             e.printStackTrace();
         }
     }
-
+    /*
+    use selected phone number to call authorities
+     */
     public void call(String phoneNum) {
         Log.d(this.getClass().getSimpleName(), "calling " + phoneNum);
         phoneNum = "tel:" + phoneNum;

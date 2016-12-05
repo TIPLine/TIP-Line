@@ -121,7 +121,9 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         }
     }
 
-
+    /*
+    confirm tip submission
+     */
     private void showConfirmationDialog() {
 
         final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(TextTip.this);
@@ -143,7 +145,9 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
+    /* confirm tip cancellation
 
+     */
     private void showCancellationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -167,7 +171,9 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+    feedback that tip was sent
+     */
     private void showTipSentDialog() {
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setTitle("Tip Sent");
@@ -182,11 +188,13 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+   send information to database
+     */
     private void sendEmail() {
         try {
             // Add subject, Body, your mail Id, and receiver mail Id.
-            sender.sendMail(title, xml, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+            sender.sendMail(title, xml, "tiplinesenderemail@gmail.com", "tip@airlineamb.org");
         }
         catch (Exception ex) {
         }

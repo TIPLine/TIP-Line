@@ -21,13 +21,24 @@
 
 ## Install Guide
 
+### For Users:
+* Search for AAI Tip Line on Google Play and click install.
+
+### For Developers:
+#### Pre-requisites
+* Java 8
+* Android Studio
+
+#### Download Instructions
+* git clone https://github.com/TIPLine/TIP-Line
+* Android Studio -> File -> New -> Import Project -> select build.gradle
+
+#### Build Instructions
+* Click Run button on Android Studio
+
+#### Troubleshooting
+* Update Android Studio to latest version.
 
 
 
 
-
-
-## How to Import
-git clone https://github.com/TIPLine/TIP-Line
-
-Android Studio -> File -> New -> Import Project -> select build.gradle

@@ -32,7 +32,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/add_image_attachment_button"
+                    android:id="@+id/addImageAttachmentButton"
                     android:src="@drawable/ic_add_black_24dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:layout_gravity="center_vertical"
@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/add_image_attachment_text"
+                    android:id="@+id/addImageAttachmentText"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Add Image Attachment"
                     android:textSize="25dp"
@@ -55,14 +55,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/add_video_attachment_button"
+                    android:id="@+id/addVideoAttachmentButton"
                     android:src="@drawable/ic_add_black_24dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:layout_alignParentBottom="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/add_video_attachment_text"
+                    android:id="@+id/addVideoAttachmentText"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Add Video Attachment"
                     android:textSize="25dp"
@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id="@+id/thumbnail_layout">
+                    android:id="@+id/thumbnailLayout">
 
                 </LinearLayout>
             </HorizontalScrollView>

@@ -77,20 +77,20 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         cancelButton = (Button) findViewById(R.id.textCancel);
         cancelButton.setOnClickListener(this);
 
-        addImageAttachmentButton = (ImageButton) findViewById(R.id.add_image_attachment_button);
+        addImageAttachmentButton = (ImageButton) findViewById(R.id.addImageAttachmentButton);
         addImageAttachmentButton.setOnClickListener(this);
 
-        TextView addImageAttachmentText = (TextView) findViewById(R.id.add_image_attachment_text);
+        TextView addImageAttachmentText = (TextView) findViewById(R.id.addImageAttachmentText);
         addImageAttachmentText.setOnClickListener(this);
 
-        ImageButton addVideoAttachmentButton = (ImageButton) findViewById(R.id.add_video_attachment_button);
+        ImageButton addVideoAttachmentButton = (ImageButton) findViewById(R.id.addVideoAttachmentButton);
         addVideoAttachmentButton.setOnClickListener(this);
 
-        TextView addVideoAttachmentText = (TextView) findViewById(R.id.add_video_attachment_text);
+        TextView addVideoAttachmentText = (TextView) findViewById(R.id.addVideoAttachmentText);
         addVideoAttachmentText.setOnClickListener(this);
 
 
-        thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnail_layout);
+        thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnailLayout);
 
         // Setting up email info
         sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign", this);
@@ -113,6 +113,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
     }
 
     @Override
+    /*
+    allows user to attach their  image based on type of file
+     */
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -122,16 +125,16 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
             case R.id.textCancel:
                 showCancellationDialog();
                 break;
-            case R.id.add_image_attachment_button:
+            case R.id.addImageAttachmentButton:
                 dispatchTakePictureIntent();
                 break;
-            case R.id.add_image_attachment_text:
+            case R.id.addImageAttachmentText:
                 dispatchTakePictureIntent();
                 break;
-            case R.id.add_video_attachment_button:
+            case R.id.addVideoAttachmentButton:
                 dispatchTakeVideoIntent();
                 break;
-            case R.id.add_video_attachment_text:
+            case R.id.addVideoAttachmentText:
                 dispatchTakeVideoIntent();
                 break;
             default:
@@ -217,7 +220,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
             thumbnailLinearLayout.addView(attachmentPreview);
         }
     }
-
+    /*
+    get the path to where the image is stored
+     */
     private String getPath(Uri uri)
     {
         String[] projection = { MediaStore.Images.Media.DATA };
@@ -230,7 +235,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         return s;
     }
 
-
+    /*
+    this is to confirm that user wants to send tip
+     */
     private void showConfirmationDialog() {
 
         final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(CameraTip.this);
@@ -271,7 +278,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+    confirm cancellation and deletion of tip
+     */
     private void showCancellationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -295,7 +304,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+    feedback that the tip was sent
+     */
     private void showTipSentDialog() {
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setTitle("Tip Sent");
@@ -310,7 +321,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+    create an image file to save visual data
+     */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -326,13 +339,16 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         currentPhoto = image;
         return image;
     }
-
+    /*
+    time stamp photo
+     */
     private String getCurrentTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
         Calendar calendar = Calendar.getInstance();
         return dateFormat.format(calendar.getTime());
     }
-    
+    /* open camera to take video
+     */
     private void dispatchTakeVideoIntent() {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         takeVideoIntent.putExtra("EXTRA_VIDEO_QUALITY", 0); //low video quality so that longer video can be attached to email
@@ -341,7 +357,9 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
             startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
         }
     }
-
+    /*
+    sends email to central database
+     */
     private void sendEmail() {
         for (int i = 0; i < attachments.size(); i++) {
             try {
@@ -352,7 +370,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         }
         try {
             // Add subject, Body, your mail Id, and receiver mail Id.
-            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tip@airlineamb.org");
         }
         catch (Exception ex) {
             ex.printStackTrace();

@@ -3,6 +3,9 @@ package io.github.tipline.android_app.util;
 import java.security.AccessController;
 import java.security.Provider;
 
+/*
+enables secure internet communications
+ */
 public final class JSSEProvider extends Provider {
 
     public JSSEProvider() {
