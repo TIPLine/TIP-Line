@@ -6,15 +6,19 @@
 * Add support for multiple phone numbers per location
 * Adjusted TIP Button appearance.
 * Updated TIP Phone Numbers
+
 ### Bug Fixes
 * Fixed submit and cancel buttons on small screen sizes
 * Fixed TIP not sending when there is no internet connectivity.
+
 ### Known Bugs and Defects
 * Needs secure login
+
 ### Planned Functionality
 * News page for human trafficking
 * Translate app into multiple languages
 * iOS and Windows phone ports
+
 ## Install Guide
 
 
