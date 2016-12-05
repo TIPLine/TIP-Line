@@ -21,6 +21,9 @@
 
 ## Install Guide
 
+### For Users:
+* Search for AAI Tip Line on Google Play and click install.
+
 ### For Developers:
 #### Pre-requisites
 * Java 8
@@ -36,7 +39,6 @@
 #### Troubleshooting
 * Update Android Studio to latest version.
 
-### For Users:
-* Search for AAI Tip Line on Google Play and click install.
+
 
 
