@@ -12,19 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.xmlpull.v1.XmlSerializer;
-
 import java.io.File;
-import java.io.StringWriter;
 import java.util.Locale;
-
-import java.io.File;
 
 import io.github.tipline.android_app.util.GMailSender;
 import io.github.tipline.android_app.util.XMLGenerator;

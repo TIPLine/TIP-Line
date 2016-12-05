@@ -10,8 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.ProgressBar;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
