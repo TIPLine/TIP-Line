@@ -94,7 +94,9 @@ public class MainPage extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
     }
-
+    /*
+    add items to side menu. This includes all tips
+     */
     private void addDrawerItems() {
         String[] menuArray = { "Home", "Tip Call", "Text Tip", "Voice Tip", "Photo/Video Tip", "", "", "", "News", "Settings" };
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
@@ -139,7 +141,9 @@ public class MainPage extends AppCompatActivity {
     }
 
 
-
+    /*
+    setup the side menu
+     */
     private void setupDrawer() {
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 
@@ -163,6 +167,9 @@ public class MainPage extends AppCompatActivity {
     }
 
     @Override
+    /*
+    create menu
+     */
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -184,6 +191,9 @@ public class MainPage extends AppCompatActivity {
 
 
     @Override
+    /*
+    if selected execute the action
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long

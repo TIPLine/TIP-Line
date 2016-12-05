@@ -17,6 +17,9 @@ public class Settings extends AppCompatActivity {
     private SharedPreferences settings;
     private String PREFS_NAME = "preferences";
     @Override
+    /*
+    creates settings page and test code toggle
+     */
     protected void onCreate(Bundle savedInstanceState) {
         settings = getSharedPreferences(PREFS_NAME, 0);
         final SharedPreferences.Editor editor = settings.edit();

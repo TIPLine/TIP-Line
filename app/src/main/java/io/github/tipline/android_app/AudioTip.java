@@ -156,7 +156,9 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
     }
-
+    /*
+    confirmation popup before tip is sent to database
+     */
     private void showConfirmationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -173,7 +175,6 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
                         double locationLongitude = getLongitude();
                         double locationLatitude = getLatitude();
                         try {
-                            //String xmlForEmail = xmlGenerator.createXML("camera", "username", getCurrentTime()
 
                             xmlForEmail = xmlGenerator.createXML("audio", "username", getCurrentTime(),
                                     country, locationLongitude, locationLatitude, "placeholder phone number",
@@ -199,7 +200,9 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+    cancellation confirmation popup before tip is deleted
+     */
     private void showCancellationDialog() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -224,7 +227,9 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
-
+    /*
+    tip sent feedback and confirmation
+     */
     private void showTipSentDialog() {
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setTitle("Tip Sent");
@@ -239,11 +244,15 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
+    /*
+    this creates a custom recorder in application
+    to capture audio tips
+     */
     private void beginRecording() throws IOException{
         boolean externalStorageAvailible = false;
         boolean externalStorageWritable = false;
         String state = Environment.getExternalStorageState();
-
+        //check external storage and set booleans to declare type
         if(Environment.MEDIA_MOUNTED.equals(state)) {
             externalStorageAvailible = true;
             externalStorageWritable =true;
@@ -255,6 +264,7 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
             externalStorageWritable = false;
         }
         File sdCar = Environment.getExternalStorageDirectory();
+        //if you have the ability to store data, begin recording
         if(externalStorageAvailible && !sdCar.exists()) {
             sdCar.mkdir();
         }
@@ -281,6 +291,9 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
         stop.setEnabled(true);
         record.setEnabled(false);
     }
+    /*
+    method to stop recording and saving data to the device
+     */
     private void stopRec() throws IOException {
         try {
             if (startRecording) {
@@ -297,13 +310,17 @@ public class AudioTip extends LocationGetterActivity implements View.OnClickList
             stopException.printStackTrace();
         }
     }
-
+    /*
+    method to time stamp recording
+     */
     private String getCurrentTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
         Calendar calendar = Calendar.getInstance();
         return dateFormat.format(calendar.getTime());
     }
-
+    /* send the recording to the customer's central database via
+    email
+     */
     private void sendEmail() {
         try {
             sender.addAttachment(newFile.getPath());

@@ -134,7 +134,6 @@ public class TipCall extends LocationGetterActivity  {
             return null;
         }
     }
-//TODO Permission check -> start asynctask -> gps lock in asynctask -> call from asynctask
 
 
 

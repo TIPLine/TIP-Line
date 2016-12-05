@@ -70,7 +70,10 @@ public class GMailSender extends javax.mail.Authenticator {
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
     }
-
+    /*
+    send mail containing tip information to the
+    specified email address
+     */
     public synchronized void sendMail(String subject, String body,
                                       String sender, String recipients) throws Exception {
         final MimeMessage message = new MimeMessage(session);
@@ -153,7 +156,9 @@ public class GMailSender extends javax.mail.Authenticator {
             throw new IOException("Not Supported");
         }
     }
-
+    /*
+    adds video, photo, or audio attachment to the email
+     */
     public void addAttachment(String filename) throws Exception {
         BodyPart messageBodyPart = new MimeBodyPart();
         DataSource source = new FileDataSource(filename);

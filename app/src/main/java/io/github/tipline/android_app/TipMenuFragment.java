@@ -43,6 +43,7 @@ public class TipMenuFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    //tip options if clicked execute
     public void onClick(View v) {
 
         switch (v.getId()) {
