@@ -77,20 +77,20 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         cancelButton = (Button) findViewById(R.id.textCancel);
         cancelButton.setOnClickListener(this);
 
-        addImageAttachmentButton = (ImageButton) findViewById(R.id.add_image_attachment_button);
+        addImageAttachmentButton = (ImageButton) findViewById(R.id.addImageAttachmentButton);
         addImageAttachmentButton.setOnClickListener(this);
 
-        TextView addImageAttachmentText = (TextView) findViewById(R.id.add_image_attachment_text);
+        TextView addImageAttachmentText = (TextView) findViewById(R.id.addImageAttachmentText);
         addImageAttachmentText.setOnClickListener(this);
 
-        ImageButton addVideoAttachmentButton = (ImageButton) findViewById(R.id.add_video_attachment_button);
+        ImageButton addVideoAttachmentButton = (ImageButton) findViewById(R.id.addVideoAttachmentButton);
         addVideoAttachmentButton.setOnClickListener(this);
 
-        TextView addVideoAttachmentText = (TextView) findViewById(R.id.add_video_attachment_text);
+        TextView addVideoAttachmentText = (TextView) findViewById(R.id.addVideoAttachmentText);
         addVideoAttachmentText.setOnClickListener(this);
 
 
-        thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnail_layout);
+        thumbnailLinearLayout = (LinearLayout) findViewById(R.id.thumbnailLayout);
 
         // Setting up email info
         sender = new GMailSender("tiplinesenderemail@gmail.com", "juniordesign", this);
@@ -125,16 +125,16 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
             case R.id.textCancel:
                 showCancellationDialog();
                 break;
-            case R.id.add_image_attachment_button:
+            case R.id.addImageAttachmentButton:
                 dispatchTakePictureIntent();
                 break;
-            case R.id.add_image_attachment_text:
+            case R.id.addImageAttachmentText:
                 dispatchTakePictureIntent();
                 break;
-            case R.id.add_video_attachment_button:
+            case R.id.addVideoAttachmentButton:
                 dispatchTakeVideoIntent();
                 break;
-            case R.id.add_video_attachment_text:
+            case R.id.addVideoAttachmentText:
                 dispatchTakeVideoIntent();
                 break;
             default:
@@ -370,7 +370,7 @@ public class CameraTip extends LocationGetterActivity implements View.OnClickLis
         }
         try {
             // Add subject, Body, your mail Id, and receiver mail Id.
-            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+            sender.sendMail(titleEditText.getText().toString(), xmlForEmail, "tiplinesenderemail@gmail.com", "tip@airlineamb.org");
         }
         catch (Exception ex) {
             ex.printStackTrace();

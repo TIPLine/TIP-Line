@@ -194,7 +194,7 @@ public class TextTip extends LocationGetterActivity implements View.OnClickListe
     private void sendEmail() {
         try {
             // Add subject, Body, your mail Id, and receiver mail Id.
-            sender.sendMail(title, xml, "tiplinesenderemail@gmail.com", "tiplinetestemail@gmail.com");
+            sender.sendMail(title, xml, "tiplinesenderemail@gmail.com", "tip@airlineamb.org");
         }
         catch (Exception ex) {
         }
