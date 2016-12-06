@@ -22,7 +22,7 @@
 ## Install Guide
 
 ### For Users:
-* Search for AAI Tip Line on Google Play and click install.
+* Go [here](https://play.google.com/store/apps/details?id=io.github.tipline.android_app&hl=en) and click install OR Search for AAI Tip Line on Google Play and click install.
 
 ### For Developers:
 #### Pre-requisites
